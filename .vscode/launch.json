@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - ChicagoIncidents",
+            "request": "launch",
+            "mainClass": "gr.di.uoa.m1542m1552.databasesystems.ChicagoIncidents",
+            "projectName": "311-Chicago-Incidents-Web-App-MongoDB"
+        }
+    ]
+}
