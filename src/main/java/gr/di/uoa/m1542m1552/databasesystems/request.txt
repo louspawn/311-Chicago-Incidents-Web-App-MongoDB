@@ -1,0 +1,10 @@
+{
+	"typeOfServiceRequest": "ABANDONED_VEHICLE",
+    "date": "1988-12-30",
+	"geoLonLat":  {
+        "coordinates": [
+            0.123321,
+            0.3453455
+        ]
+    }
+}

@@ -25,8 +25,8 @@ public class TestService1 {
         return testRepository.findFirstByTestString(testString);
     }
 
-    Test1 findByTestStringAndTestBoolean(String testString, boolean testBoolean) {
-        return testRepository.findByTestStringAndTestBoolean(testString, testBoolean);
+    Test1 findByTestString(String testString) {
+        return testRepository.findByTestString(testString);
     }
 
     Test1 findCustomByTestString(String testString) {

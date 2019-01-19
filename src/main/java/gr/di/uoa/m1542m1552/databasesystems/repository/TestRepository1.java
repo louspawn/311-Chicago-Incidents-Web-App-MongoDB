@@ -11,7 +11,7 @@ public interface TestRepository1 extends MongoRepository<Test1, String> {
 
     Test1 findFirstByTestString(String testString);
 
-    Test1 findByTestStringAndTestBoolean(String testString, boolean testBoolean);
+    Test1 findByTestString(String testString);
 
     //Supports native JSON query string
     @Query("{testString:'?0'}")

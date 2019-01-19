@@ -10,13 +10,8 @@ public class Test1 {
     @Id
     private String id;
 
-    @NotNull
     private String testString;
 
-    @NotNull
-    private boolean testBoolean;
-
-    @NotNull
     private String testString1;
 
 
@@ -24,7 +19,6 @@ public class Test1 {
 
     public Test1(String testString, boolean testBoolean, String testString1) {
         this.testString = testString;
-        this.testBoolean = testBoolean;
         this.testString1 = testString1;
     }
 
@@ -54,20 +48,6 @@ public class Test1 {
      */
     public void setTestString(String testString) {
         this.testString = testString;
-    }
-
-    /**
-     * @return the testBoolean
-     */
-    public boolean isTestBoolean() {
-        return testBoolean;
-    }
-
-    /**
-     * @param testBoolean the testBoolean to set
-     */
-    public void setTestBoolean(boolean testBoolean) {
-        this.testBoolean = testBoolean;
     }
 
     /**
