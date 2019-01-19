@@ -1,0 +1,10 @@
+- Indexes
+
+- Revisioning
+
+- Data validation
+
+
+How TODO?
+- Array size for upvotes
+https://docs.mongodb.com/manual/reference/operator/aggregation/size/
