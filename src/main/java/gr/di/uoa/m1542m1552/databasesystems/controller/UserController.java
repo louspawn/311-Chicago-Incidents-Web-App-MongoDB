@@ -9,22 +9,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import gr.di.uoa.m1542m1552.databasesystems.domain.Test1;
-import gr.di.uoa.m1542m1552.databasesystems.service.TestService1;
+import gr.di.uoa.m1542m1552.databasesystems.domain.User;
+import gr.di.uoa.m1542m1552.databasesystems.service.UserService;
 
 @RestController
-@RequestMapping("/tests1")
-public class TestController1 {
+@RequestMapping("/user")
+public class UserController {
     @Autowired
-    TestService1 testService;
+    UserService userService;
 
 	@PostMapping("/")
-	public Test1 createTest(@RequestBody Test1 newTest) {
-        return testService.createTest(newTest);
+	public User createUser(@RequestBody User newUser) {
+        return userService.createUser(newUser);
     }
     
 	@GetMapping("/")
-	public List<Test1> findAllTests() {
-        return testService.getTests();
+	public List<User> getUser() {
+        return userService.getUser();
 	}
 }

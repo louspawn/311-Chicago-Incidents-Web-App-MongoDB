@@ -1,6 +1,7 @@
 {
+	"date": "1988-12-30",
+	"status": "OPEN",
 	"typeOfServiceRequest": "ABANDONED_VEHICLE",
-    "date": "1988-12-30",
 	"geoLonLat":  {
         "coordinates": [
             0.123321,
