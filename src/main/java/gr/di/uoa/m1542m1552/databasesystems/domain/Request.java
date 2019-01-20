@@ -1,5 +1,6 @@
 package gr.di.uoa.m1542m1552.databasesystems.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import gr.di.uoa.m1542m1552.databasesystems.enumerations.Status;
 import gr.di.uoa.m1542m1552.databasesystems.enumerations.TypeOfServiceRequest;
 
-@Document(collection = "request")
+@Document(collection = "requests")
 public class Request {
 
     /* Common request attributes */
@@ -99,9 +100,9 @@ public class Request {
 
     /* Upvotes attributes */
 
-    private List<RequestUpvote> upvotes;
+    private List<RequestUpvote> upvotes = new ArrayList<RequestUpvote>();
 
-    private Integer upvoteNum;
+    private Integer upvoteNum = 0;
 
     /* Getters and setters */
 

@@ -28,7 +28,7 @@ public class UserService {
     }
 
     public boolean hasUserUpvotedRequest(String userId, String requestId) {
-        if(userRepository.findCustomByTestString(userId, requestId) != null) {
+        if(userRepository.getUserUpvotedRequest(userId, requestId) != null) {
             return true;
         }
 

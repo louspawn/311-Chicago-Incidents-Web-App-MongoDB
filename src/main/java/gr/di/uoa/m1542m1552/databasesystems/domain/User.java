@@ -1,11 +1,12 @@
 package gr.di.uoa.m1542m1552.databasesystems.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "user")
+@Document(collection = "users")
 public class User {
 
     @Id
@@ -19,9 +20,9 @@ public class User {
 
     /* Upvotes attributes */
 
-    private List<UserUpvote> upvotes;
+    private List<UserUpvote> upvotes = new ArrayList<UserUpvote>();
 
-    private Integer upvoteNum;
+    private Integer upvoteNum = 0;
 
     /**
      * @return the id
