@@ -1,5 +1,7 @@
 package gr.di.uoa.m1542m1552.databasesystems.domain;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,6 +16,12 @@ public class User {
     private String telephoneNumber;
 
     private String address;
+
+    /* Upvotes attributes */
+
+    private List<UserUpvote> upvotes;
+
+    private Integer upvoteNum;
 
     /**
      * @return the id
@@ -69,6 +77,34 @@ public class User {
      */
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    /**
+     * @return the upvotes
+     */
+    public List<UserUpvote> getUpvotes() {
+        return upvotes;
+    }
+
+    /**
+     * @param upvotes the upvotes to set
+     */
+    public void setUpvotes(List<UserUpvote> upvotes) {
+        this.upvotes = upvotes;
+    }
+
+    /**
+     * @return the upvoteNum
+     */
+    public Integer getUpvoteNum() {
+        return upvoteNum;
+    }
+
+    /**
+     * @param upvoteNum the upvoteNum to set
+     */
+    public void setUpvoteNum(Integer upvoteNum) {
+        this.upvoteNum = upvoteNum;
     }
 
 }

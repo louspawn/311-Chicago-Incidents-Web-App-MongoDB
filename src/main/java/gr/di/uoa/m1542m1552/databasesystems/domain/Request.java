@@ -1,6 +1,7 @@
 package gr.di.uoa.m1542m1552.databasesystems.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
@@ -31,7 +32,11 @@ public class Request {
 
     private String streetAddress;
 
-    private Integer streetNumber;
+    private Integer ward;
+
+    private Integer policeDistrict;
+
+    private Integer communityArea;
 
     private Integer zipCode;
 
@@ -91,6 +96,12 @@ public class Request {
     /* Sanitation Code Complaints Request attribute */
 
     private String natureOfCodeViolation;
+
+    /* Upvotes attributes */
+
+    private List<RequestUpvote> upvotes;
+
+    private Integer upvoteNum;
 
     /* Getters and setters */
 
@@ -162,12 +173,46 @@ public class Request {
         this.streetAddress = streetAddress;
     }
 
-    public Integer getStreetNumber() {
-        return this.streetNumber;
+    /**
+     * @return the ward
+     */
+    public Integer getWard() {
+        return ward;
     }
 
-    public void setStreetNumber(Integer streetNumber) {
-        this.streetNumber = streetNumber;
+    /**
+     * @param ward the ward to set
+     */
+    public void setWard(Integer ward) {
+        this.ward = ward;
+    }
+
+    /**
+     * @return the policeDistrict
+     */
+    public Integer getPoliceDistrict() {
+        return policeDistrict;
+    }
+
+    /**
+     * @param policeDistrict the policeDistrict to set
+     */
+    public void setPoliceDistrict(Integer policeDistrict) {
+        this.policeDistrict = policeDistrict;
+    }
+
+    /**
+     * @return the communityArea
+     */
+    public Integer getCommunityArea() {
+        return communityArea;
+    }
+
+    /**
+     * @param communityArea the communityArea to set
+     */
+    public void setCommunityArea(Integer communityArea) {
+        this.communityArea = communityArea;
     }
 
     public Integer getZipCode() {
@@ -424,6 +469,34 @@ public class Request {
      */
     public void setNatureOfCodeViolation(String natureOfCodeViolation) {
         this.natureOfCodeViolation = natureOfCodeViolation;
+    }
+
+    /**
+     * @return the upvotes
+     */
+    public List<RequestUpvote> getUpvotes() {
+        return upvotes;
+    }
+
+    /**
+     * @param upvotes the upvotes to set
+     */
+    public void setUpvotes(List<RequestUpvote> upvotes) {
+        this.upvotes = upvotes;
+    }
+
+    /**
+     * @return the upvoteNum
+     */
+    public Integer getUpvoteNum() {
+        return upvoteNum;
+    }
+
+    /**
+     * @param upvoteNum the upvoteNum to set
+     */
+    public void setUpvoteNum(Integer upvoteNum) {
+        this.upvoteNum = upvoteNum;
     }
 
 }

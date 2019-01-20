@@ -1,11 +1,44 @@
+
+*** New Request ***
+
 {
-	"date": "1988-12-30",
+	"serviceRequestNumber": "0",
+	"creationDate": "1988-12-30",
+	"completionDate": "1988-12-31",
 	"status": "OPEN",
-	"typeOfServiceRequest": "ABANDONED_VEHICLE",
+	"typeOfServiceRequest": "ALLEY_LIGHTS_OUT",
+	"streetAddress": "Address 1",
+	"ward": 1,
+	"policeDistrict": 2,
+	"communityArea": 3,
+	"zipCode": 12345,
+	"xcoordinate": 1.1,
+	"ycoordinate": 1.2,
 	"geoLonLat":  {
         "coordinates": [
             0.123321,
             0.3453455
         ]
-    }
+    },
+    "location": "{}",
+    "upvotes": [],
+	"upvoteNum": 0
+}
+
+
+*** New User ***
+
+{
+	"fullName": "full name",
+	"telephoneNumber": "1234567890",
+	"address": "Address 1",
+	"upvotes": [],
+	"upvoteNum": 0
+}
+
+*** New upvote ***
+
+{
+	"requestId": "5c447f59da424854d031a350",
+	"userId": "5c447c14da424854d031a34b"
 }

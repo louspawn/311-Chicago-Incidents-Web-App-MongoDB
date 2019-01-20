@@ -9,6 +9,9 @@ import java.util.List;
 
 public interface UserRepository extends MongoRepository<User, String> {
 
+    @Query("{_id: '?0', upvotes.requestId: '?1'}")
+    public User findCustomByTestString(String userId, String requestId);
+
     // User findFirstByTestString(String testString);
 
     // User findByTestString(String testString);
