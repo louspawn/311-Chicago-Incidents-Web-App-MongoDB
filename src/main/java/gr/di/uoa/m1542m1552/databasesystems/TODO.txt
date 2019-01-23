@@ -4,6 +4,8 @@
 
 - Data validation
 
+- Graffiti
+
 
 How TODO?
 - Array size for upvotes
