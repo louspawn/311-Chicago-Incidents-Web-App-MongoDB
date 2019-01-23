@@ -37,7 +37,7 @@ public class UserService {
 
     public User addUpvote(User user, Request request) {
         user.getUpvotes().add(new UserUpvote(request.getId(), request.getWard()));
-        user.setUpvoteNum(user.getUpvoteNum() + 1);
+        user.setUpvotesCount(user.getUpvotesCount() + 1);
 
         return userRepository.save(user);
     }

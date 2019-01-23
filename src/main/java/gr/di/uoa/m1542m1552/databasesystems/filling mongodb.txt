@@ -1,68 +1,34 @@
 # Abandoned Vehicles
-mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --columnsHaveTypes \
---fields "creationDate.date(2006-01-02T15:04:05),status.string(),completionDate.date(2006-01-02T15:04:05),serviceRequestNumber.string(),typeOfServiceRequest.string(),\
-licensePlate.string(),vehicleModel.string(),vehicleColor.string(),currentActivity.string(),mostRecentAction.string(),daysAbandoned.string(),streetAddress.string(),\
-zipCode.int32(),xCoordinate.double(),yCoordinate.double(),ward.int32(),policeDistrinct.int32(),communityArea.int32(),ssa.int32(),latitude.double(),\
-longitude.double(),location.string()" --file 311-service-requests-abandoned-vehicles.csv
+mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --columnsHaveTypes --fields "creationDate.date(2006-01-02T15:04:05),status.string(),completionDate.date(2006-01-02T15:04:05),serviceRequestNumber.string(),typeOfServiceRequest.string(),licensePlate.string(),vehicleModel.string(),vehicleColor.string(),currentActivity.string(),mostRecentAction.string(),daysAbandoned.string(),streetAddress.string(),zipCode.int32(),xCoordinate.double(),yCoordinate.double(),ward.int32(),policeDistrict.int32(),communityArea.int32(),ssa.int32(),latitude.double(),longitude.double(),location.string()" --file 311-service-requests-abandoned-vehicles.csv
 
 # Alley Lights Out
-mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --columnsHaveTypes \
---fields "creationDate.date(2006-01-02T15:04:05),status.string(),completionDate.date(2006-01-02T15:04:05),serviceRequestNumber.string(),typeOfServiceRequest.string(),\
-streetAddress.string(),zipCode.int32(),xCoordinate.double(),yCoordinate.double(),ward.int32(),policeDistrinct.int32(),communityArea.int32(),latitude.double(),\
-longitude.double(),location.string()" --file 311-service-requests-alley-lights-out.csv
+mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --columnsHaveTypes --fields "creationDate.date(2006-01-02T15:04:05),status.string(),completionDate.date(2006-01-02T15:04:05),serviceRequestNumber.string(),typeOfServiceRequest.string(),streetAddress.string(),zipCode.int32(),xCoordinate.double(),yCoordinate.double(),ward.int32(),policeDistrict.int32(),communityArea.int32(),latitude.double(),longitude.double(),location.string()" --file 311-service-requests-alley-lights-out.csv
 
 # Garbage 
-mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --columnsHaveTypes \
---fields "creationDate.date(2006-01-02T15:04:05),status.string(),completionDate.date(2006-01-02T15:04:05),serviceRequestNumber.string(),typeOfServiceRequest.string(),\
-blackCartsDelivered.string(),currentActivity.string(),mostRecentAction.string(),streetAddress.string(),\
-zipCode.int32(),xCoordinate.double(),yCoordinate.double(),ward.int32(),policeDistrinct.int32(),communityArea.int32(),ssa.int32(),latitude.double(),\
-longitude.double(),location.string()" --file 311-service-requests-garbage-carts.csv
+mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --columnsHaveTypes --fields "creationDate.date(2006-01-02T15:04:05),status.string(),completionDate.date(2006-01-02T15:04:05),serviceRequestNumber.string(),typeOfServiceRequest.string(),blackCartsDelivered.string(),currentActivity.string(),mostRecentAction.string(),streetAddress.string(),zipCode.int32(),xCoordinate.double(),yCoordinate.double(),ward.int32(),policeDistrict.int32(),communityArea.int32(),ssa.int32(),latitude.double(),longitude.double(),location.string()" --file 311-service-requests-garbage-carts.csv
+
+# Graffiti 
+mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --columnsHaveTypes --fields "creationDate.date(2006-01-02T15:04:05),status.string(),completionDate.date(2006-01-02T15:04:05),serviceRequestNumber.string(),typeOfServiceRequest.string(),typeOfSurface.string(),whereIsLocated.string(),streetAddress.string(),zipCode.int32(),xCoordinate.double(),yCoordinate.double(),ward.int32(),policeDistrict.int32(),communityArea.int32(),ssa.int32(),latitude.double(),longitude.double(),location.string()" --file 311-service-requests-graffiti-removal.csv
 
 # PotHoles 
-mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --columnsHaveTypes \
---fields "creationDate.date(2006-01-02T15:04:05),status.string(),completionDate.date(2006-01-02T15:04:05),serviceRequestNumber.string(),typeOfServiceRequest.string(),\
-currentActivity.string(),mostRecentAction.string(),numberOfPotholes.string(),streetAddress.string(),\
-zipCode.int32(),xCoordinate.double(),yCoordinate.double(),ward.int32(),policeDistrinct.int32(),communityArea.int32(),ssa.int32(),latitude.double(),\
-longitude.double(),location.string()" --file 311-service-requests-pot-holes-reported.csv
+mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --columnsHaveTypes --fields "creationDate.date(2006-01-02T15:04:05),status.string(),completionDate.date(2006-01-02T15:04:05),serviceRequestNumber.string(),typeOfServiceRequest.string(),currentActivity.string(),mostRecentAction.string(),numberOfPotholes.string(),streetAddress.string(),zipCode.int32(),xCoordinate.double(),yCoordinate.double(),ward.int32(),policeDistrict.int32(),communityArea.int32(),ssa.int32(),latitude.double(),longitude.double(),location.string()" --file 311-service-requests-pot-holes-reported.csv
 
 # Rodent Baiting
-mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --columnsHaveTypes \
---fields "creationDate.date(2006-01-02T15:04:05),status.string(),completionDate.date(2006-01-02T15:04:05),serviceRequestNumber.string(),typeOfServiceRequest.string(),\
-numberOfPremisesBaited.string(),numberOfPremisesWithGarbage.string(),numberOfPremisesWithRats.string(),currentActivity.string(),mostRecentAction.string(),streetAddress.string(),\
-zipCode.int32(),xCoordinate.double(),yCoordinate.double(),ward.int32(),policeDistrinct.int32(),communityArea.int32(),latitude.double(),\
-longitude.double(),location.string()" --file 311-service-requests-rodent-baiting.csv
+mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --columnsHaveTypes --fields "creationDate.date(2006-01-02T15:04:05),status.string(),completionDate.date(2006-01-02T15:04:05),serviceRequestNumber.string(),typeOfServiceRequest.string(),numberOfPremisesBaited.string(),numberOfPremisesWithGarbage.string(),numberOfPremisesWithRats.string(),currentActivity.string(),mostRecentAction.string(),streetAddress.string(),zipCode.int32(),xCoordinate.double(),yCoordinate.double(),ward.int32(),policeDistrict.int32(),communityArea.int32(),latitude.double(),longitude.double(),location.string()" --file 311-service-requests-rodent-baiting.csv
 
 # Sanitation Complaints
-mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --columnsHaveTypes \
---fields "creationDate.date(2006-01-02T15:04:05),status.string(),completionDate.date(2006-01-02T15:04:05),serviceRequestNumber.string(),typeOfServiceRequest.string(),\
-natureOfCodeViolation.string(),streetAddress.string(),\
-zipCode.int32(),xCoordinate.double(),yCoordinate.double(),ward.int32(),policeDistrinct.int32(),communityArea.int32(),latitude.double(),\
-longitude.double(),location.string()" --file 311-service-requests-sanitation-code-complaints.csv
+mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --columnsHaveTypes --fields "creationDate.date(2006-01-02T15:04:05),status.string(),completionDate.date(2006-01-02T15:04:05),serviceRequestNumber.string(),typeOfServiceRequest.string(),natureOfCodeViolation.string(),streetAddress.string(),zipCode.int32(),xCoordinate.double(),yCoordinate.double(),ward.int32(),policeDistrict.int32(),communityArea.int32(),latitude.double(),longitude.double(),location.string()" --file 311-service-requests-sanitation-code-complaints.csv
 
 # Lights All Out
-mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --columnsHaveTypes \
---fields "creationDate.date(2006-01-02T15:04:05),status.string(),completionDate.date(2006-01-02T15:04:05),serviceRequestNumber.string(),typeOfServiceRequest.string(),\
-streetAddress.string(),zipCode.int32(),xCoordinate.double(),yCoordinate.double(),ward.int32(),policeDistrinct.int32(),communityArea.int32(),latitude.double(),\
-longitude.double(),location.string()" --file 311-service-requests-street-lights-all-out.csv# Lights All Out
+mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --columnsHaveTypes --fields "creationDate.date(2006-01-02T15:04:05),status.string(),completionDate.date(2006-01-02T15:04:05),serviceRequestNumber.string(),typeOfServiceRequest.string(),streetAddress.string(),zipCode.int32(),xCoordinate.double(),yCoordinate.double(),ward.int32(),policeDistrict.int32(),communityArea.int32(),latitude.double(),longitude.double(),location.string()" --file 311-service-requests-street-lights-all-out.csv
 
 # Lights One Out
-mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --columnsHaveTypes \
---fields "creationDate.date(2006-01-02T15:04:05),status.string(),completionDate.date(2006-01-02T15:04:05),serviceRequestNumber.string(),typeOfServiceRequest.string(),\
-streetAddress.string(),zipCode.int32(),xCoordinate.double(),yCoordinate.double(),ward.int32(),policeDistrinct.int32(),communityArea.int32(),latitude.double(),\
-longitude.double(),location.string()" --file 311-service-requests-street-lights-one-out.csv
+mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --columnsHaveTypes --fields "creationDate.date(2006-01-02T15:04:05),status.string(),completionDate.date(2006-01-02T15:04:05),serviceRequestNumber.string(),typeOfServiceRequest.string(),streetAddress.string(),zipCode.int32(),xCoordinate.double(),yCoordinate.double(),ward.int32(),policeDistrict.int32(),communityArea.int32(),latitude.double(),longitude.double(),location.string()" --file 311-service-requests-street-lights-one-out.csv
 
 # Tree Debris
-mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --columnsHaveTypes \
---fields "creationDate.date(2006-01-02T15:04:05),status.string(),completionDate.date(2006-01-02T15:04:05),serviceRequestNumber.string(),typeOfServiceRequest.string(),\
-whereIsLocated.string(),currentActivity.string(),mostRecentAction.string(),streetAddress.string(),zipCode.int32(),xCoordinate.double(),yCoordinate.double(),ward.int32(),\
-policeDistrinct.int32(),communityArea.int32(),latitude.double(),\
-longitude.double(),location.string()" --file 311-service-requests-tree-debris.csv
+mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --columnsHaveTypes --fields "creationDate.date(2006-01-02T15:04:05),status.string(),completionDate.date(2006-01-02T15:04:05),serviceRequestNumber.string(),typeOfServiceRequest.string(),whereIsLocated.string(),currentActivity.string(),mostRecentAction.string(),streetAddress.string(),zipCode.int32(),xCoordinate.double(),yCoordinate.double(),ward.int32(),policeDistrict.int32(),communityArea.int32(),latitude.double(),longitude.double(),location.string()" --file 311-service-requests-tree-debris.csv
 
 # Tree Trims
-mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --columnsHaveTypes \
---fields "creationDate.date(2006-01-02T15:04:05),status.string(),completionDate.date(2006-01-02T15:04:05),serviceRequestNumber.string(),typeOfServiceRequest.string(),\
-whereIsLocated.string(),streetAddress.string(),zipCode.int32(),xCoordinate.double(),yCoordinate.double(),ward.int32(),\
-policeDistrinct.int32(),communityArea.int32(),latitude.double(),\
-longitude.double(),location.string()" --file 311-service-requests-tree-trims.csv
+mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --columnsHaveTypes --fields "creationDate.date(2006-01-02T15:04:05),status.string(),completionDate.date(2006-01-02T15:04:05),serviceRequestNumber.string(),typeOfServiceRequest.string(),whereIsLocated.string(),streetAddress.string(),zipCode.int32(),xCoordinate.double(),yCoordinate.double(),ward.int32(),policeDistrict.int32(),communityArea.int32(),latitude.double(),longitude.double(),location.string()" --file 311-service-requests-tree-trims.csv
 
-db.requests.find().forEach(function(r) {     r.geoLonLat = {type: "Point", coordinates:[r.latitude, r.longitude]} ;  delete(r.latitude); delete(r.longitude);    db.requests.save(r);    });
+db.requests.find().forEach(function(r) {     r.geoLocation = {type: "Point", coordinates:[r.longitude, r.latitude]} ;  r.upvotes = [] ; r.upvotesCount = 0 ;  delete(r.latitude); delete(r.longitude);    db.requests.save(r);    });

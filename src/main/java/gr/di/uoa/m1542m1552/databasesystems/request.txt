@@ -14,7 +14,7 @@
 	"zipCode": 12345,
 	"xcoordinate": 1.1,
 	"ycoordinate": 1.2,
-	"geoLonLat":  {
+	"geoLocation":  {
         "coordinates": [
             0.123321,
             0.3453455

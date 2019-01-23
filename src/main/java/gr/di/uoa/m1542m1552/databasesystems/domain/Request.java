@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
@@ -14,6 +16,7 @@ import gr.di.uoa.m1542m1552.databasesystems.enumerations.Status;
 import gr.di.uoa.m1542m1552.databasesystems.enumerations.TypeOfServiceRequest;
 
 @Document(collection = "requests")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Request {
 
     /* Common request attributes */
@@ -46,7 +49,7 @@ public class Request {
     private Double yCoordinate;
 
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
-    private GeoJsonPoint geoLonLat;
+    private GeoJsonPoint geoLocation;
 
     private String location;
 
@@ -72,27 +75,27 @@ public class Request {
 
     private String vehicleColor;
 
-    private Integer daysReported;
+    private String daysAbandoned;
 
     /* Garbage Carts Request attribute */
 
-    private Integer numberOfBlackCartsDelivered;
+    private Integer blackCartsDelivered;
 
     /* Graffiti Removal Request attributes */
 
-    private String typeOfSurfaceIsOn;
+    private String typeOfSurface;
 
     /* Pot Holes Request attribute */
 
-    private Integer numberOfPotHolesFilledOnBlock;
+    private String numberOfPotholes;
 
     /* Rodent Baiting Request attributes */
 
-    private Integer numberOfPremisesBaited;
+    private String numberOfPremisesBaited;
 
-    private Integer numberOfPremisesWithGarbage;
+    private String numberOfPremisesWithGarbage;
 
-    private Integer numberOfPremisesWithRats;
+    private String numberOfPremisesWithRats;
 
     /* Sanitation Code Complaints Request attribute */
 
@@ -102,7 +105,7 @@ public class Request {
 
     private List<RequestUpvote> upvotes = new ArrayList<RequestUpvote>();
 
-    private Integer upvoteNum = 0;
+    private Integer upvotesCount = 0;
 
     /* Getters and setters */
 
@@ -241,17 +244,17 @@ public class Request {
     }
 
     /**
-     * @return the geoLonLat
+     * @return the geoLocation
      */
-    public GeoJsonPoint getGeoLonLat() {
-        return geoLonLat;
+    public GeoJsonPoint getGeoLocation() {
+        return geoLocation;
     }
 
     /**
-     * @param geoLonLat the geoLonLat to set
+     * @param geoLocation the geoLocation to set
      */
-    public void setGeoLonLat(GeoJsonPoint geoLonLat) {
-        this.geoLonLat = geoLonLat;
+    public void setGeoLocation(GeoJsonPoint geoLocation) {
+        this.geoLocation = geoLocation;
     }
 
     public String getLocation() {
@@ -361,100 +364,100 @@ public class Request {
     }
 
     /**
-     * @return the daysReported
+     * @return the daysAbandoned
      */
-    public Integer getDaysReported() {
-        return daysReported;
+    public String getDaysAbandoned() {
+        return daysAbandoned;
     }
 
     /**
-     * @param daysReported the daysReported to set
+     * @param daysAbandoned the daysAbandoned to set
      */
-    public void setDaysReported(Integer daysReported) {
-        this.daysReported = daysReported;
+    public void setDaysAbandoned(String daysAbandoned) {
+        this.daysAbandoned = daysAbandoned;
     }
 
     /**
-     * @return the numberOfBlackCartsDelivered
+     * @return the blackCartsDelivered
      */
-    public Integer getNumberOfBlackCartsDelivered() {
-        return numberOfBlackCartsDelivered;
+    public Integer getBlackCartsDelivered() {
+        return blackCartsDelivered;
     }
 
     /**
-     * @param numberOfBlackCartsDelivered the numberOfBlackCartsDelivered to set
+     * @param blackCartsDelivered the blackCartsDelivered to set
      */
-    public void setNumberOfBlackCartsDelivered(Integer numberOfBlackCartsDelivered) {
-        this.numberOfBlackCartsDelivered = numberOfBlackCartsDelivered;
+    public void seBlackCartsDelivered(Integer blackCartsDelivered) {
+        this.blackCartsDelivered = blackCartsDelivered;
     }
 
     /**
-     * @return the typeOfSurfaceIsOn
+     * @return the typeOfSurface
      */
-    public String getTypeOfSurfaceIsOn() {
-        return typeOfSurfaceIsOn;
+    public String getTypeOfSurface() {
+        return typeOfSurface;
     }
 
     /**
-     * @param typeOfSurfaceIsOn the typeOfSurfaceIsOn to set
+     * @param typeOfSurface the typeOfSurface to set
      */
-    public void setTypeOfSurfaceIsOn(String typeOfSurfaceIsOn) {
-        this.typeOfSurfaceIsOn = typeOfSurfaceIsOn;
+    public void setTypeOfSurface(String typeOfSurface) {
+        this.typeOfSurface = typeOfSurface;
     }
 
     /**
-     * @return the numberOfPotHolesFilledOnBlock
+     * @return the numberOfPotholes
      */
-    public Integer getNumberOfPotHolesFilledOnBlock() {
-        return numberOfPotHolesFilledOnBlock;
+    public String getNumberOfPotholes() {
+        return numberOfPotholes;
     }
 
     /**
-     * @param numberOfPotHolesFilledOnBlock the numberOfPotHolesFilledOnBlock to set
+     * @param numberOfPotholes the numberOfPotholes to set
      */
-    public void setNumberOfPotHolesFilledOnBlock(Integer numberOfPotHolesFilledOnBlock) {
-        this.numberOfPotHolesFilledOnBlock = numberOfPotHolesFilledOnBlock;
+    public void setNumberOfPotholes(String numberOfPotholes) {
+        this.numberOfPotholes = numberOfPotholes;
     }
 
     /**
      * @return the numberOfPremisesBaited
      */
-    public Integer getNumberOfPremisesBaited() {
+    public String getNumberOfPremisesBaited() {
         return numberOfPremisesBaited;
     }
 
     /**
      * @param numberOfPremisesBaited the numberOfPremisesBaited to set
      */
-    public void setNumberOfPremisesBaited(Integer numberOfPremisesBaited) {
+    public void setNumberOfPremisesBaited(String numberOfPremisesBaited) {
         this.numberOfPremisesBaited = numberOfPremisesBaited;
     }
 
     /**
      * @return the numberOfPremisesWithGarbage
      */
-    public Integer getNumberOfPremisesWithGarbage() {
+    public String getNumberOfPremisesWithGarbage() {
         return numberOfPremisesWithGarbage;
     }
 
     /**
      * @param numberOfPremisesWithGarbage the numberOfPremisesWithGarbage to set
      */
-    public void setNumberOfPremisesWithGarbage(Integer numberOfPremisesWithGarbage) {
+    public void setNumberOfPremisesWithGarbage(String numberOfPremisesWithGarbage) {
         this.numberOfPremisesWithGarbage = numberOfPremisesWithGarbage;
     }
 
     /**
      * @return the numberOfPremisesWithRats
      */
-    public Integer getNumberOfPremisesWithRats() {
+    public String getNumberOfPremisesWithRats() {
         return numberOfPremisesWithRats;
     }
 
     /**
      * @param numberOfPremisesWithRats the numberOfPremisesWithRats to set
      */
-    public void setNumberOfPremisesWithRats(Integer numberOfPremisesWithRats) {
+    public void setNumberOfPremisesWithRats(String numberOfPremisesWithRats) {
         this.numberOfPremisesWithRats = numberOfPremisesWithRats;
     }
 
@@ -487,17 +490,17 @@ public class Request {
     }
 
     /**
-     * @return the upvoteNum
+     * @return the upvotesCount
      */
-    public Integer getUpvoteNum() {
-        return upvoteNum;
+    public Integer getUpvotesCount() {
+        return upvotesCount;
     }
 
     /**
-     * @param upvoteNum the upvoteNum to set
+     * @param upvotesCount the upvotesCount to set
      */
-    public void setUpvoteNum(Integer upvoteNum) {
-        this.upvoteNum = upvoteNum;
+    public void setUpvotesCount(Integer upvotesCount) {
+        this.upvotesCount = upvotesCount;
     }
 
 }

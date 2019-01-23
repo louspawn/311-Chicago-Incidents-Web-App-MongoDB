@@ -29,7 +29,7 @@ public class RequestService {
 
     public Request addUpvote(Request request, User user) {
         request.getUpvotes().add(new RequestUpvote(user.getId(), user.getTelephoneNumber()));
-        request.setUpvoteNum(request.getUpvoteNum() + 1);
+        request.setUpvotesCount(request.getUpvotesCount() + 1);
 
         return requestRepository.save(request);
     }
