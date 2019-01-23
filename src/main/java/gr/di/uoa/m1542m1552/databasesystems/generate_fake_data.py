@@ -37,7 +37,8 @@ if create_users:
                           'fullName': fake.name(), 
                           'address': fake.address(),
                           'telephoneNumber': fake_telephone_number(),
-                          'upvotes': []})
+                          'upvotes': [],
+                          'upvotesCount': 0})
 
     col_usr.insert_many(user_list)
     exit(0)
