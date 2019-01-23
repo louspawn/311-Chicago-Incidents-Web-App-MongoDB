@@ -49,7 +49,7 @@ public class Request {
     private Double yCoordinate;
 
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
-    private GeoJsonPoint geoLonLat;
+    private GeoJsonPoint geoLocation;
 
     private String location;
 
@@ -244,17 +244,17 @@ public class Request {
     }
 
     /**
-     * @return the geoLonLat
+     * @return the geoLocation
      */
-    public GeoJsonPoint getGeoLonLat() {
-        return geoLonLat;
+    public GeoJsonPoint getGeoLocation() {
+        return geoLocation;
     }
 
     /**
-     * @param geoLonLat the geoLonLat to set
+     * @param geoLocation the geoLocation to set
      */
-    public void setGeoLonLat(GeoJsonPoint geoLonLat) {
-        this.geoLonLat = geoLonLat;
+    public void setGeoLocation(GeoJsonPoint geoLocation) {
+        this.geoLocation = geoLocation;
     }
 
     public String getLocation() {
