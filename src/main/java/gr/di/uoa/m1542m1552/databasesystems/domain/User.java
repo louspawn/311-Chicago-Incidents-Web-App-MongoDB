@@ -22,7 +22,7 @@ public class User {
 
     private List<UserUpvote> upvotes = new ArrayList<UserUpvote>();
 
-    private Integer upvoteNum = 0;
+    private Integer upvotesCount = 0;
 
     /**
      * @return the id
@@ -95,17 +95,17 @@ public class User {
     }
 
     /**
-     * @return the upvoteNum
+     * @return the upvotesCount
      */
-    public Integer getUpvoteNum() {
-        return upvoteNum;
+    public Integer getUpvotesCount() {
+        return upvotesCount;
     }
 
     /**
-     * @param upvoteNum the upvoteNum to set
+     * @param upvotesCount the upvotesCount to set
      */
-    public void setUpvoteNum(Integer upvoteNum) {
-        this.upvoteNum = upvoteNum;
+    public void setUpvotesCount(Integer upvotesCount) {
+        this.upvotesCount = upvotesCount;
     }
 
 }
