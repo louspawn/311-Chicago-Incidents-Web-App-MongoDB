@@ -3,6 +3,7 @@ package gr.di.uoa.m1542m1552.databasesystems.controller;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +31,8 @@ public class UpvoteController {
         String userId = bodyMap.get("userId");
         String requestId = bodyMap.get("requestId");
 
-        Request request = requestService.getRequest(requestId);
-        User user = userService.getUser(userId);
+        Optional<Request> request = requestService.getRequest(requestId);
+        Optional<User> user = userService.getUser(userId);
 
         if(user == null || request == null) {
             return "Bad request! Wrong userId or requestId";
@@ -41,8 +42,8 @@ public class UpvoteController {
             return "User already upvoted this request";
         }
 
-        requestService.addUpvote(request, user);
-        userService.addUpvote(user, request);
+        requestService.addUpvote(request.get(), user.get());
+        userService.addUpvote(user.get(), request.get());
 
         return "OK";
     }

@@ -1,6 +1,7 @@
 package gr.di.uoa.m1542m1552.databasesystems.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +31,7 @@ public class RequestController {
     }
     
     @GetMapping("/{id}")
-	public Request getRequest(@PathVariable String id) {
+	public Optional<Request> getRequest(@PathVariable String id) {
         return requestService.getRequest(id);
 	}
 }
