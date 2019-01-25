@@ -1,6 +1,7 @@
 package gr.di.uoa.m1542m1552.databasesystems.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User getUser(String userId) {
-        return userRepository.findOne(userId);
+    public Optional<User> getUser(String userId) {
+        return userRepository.findById(userId);
     }
 
     public boolean hasUserUpvotedRequest(String userId, String requestId) {
