@@ -36,4 +36,22 @@ public class QueryController {
 
         return queryService.query1(startDate, endDate);
     }
+
+	@GetMapping("/2/typeOfServiceRequest={typeOfServiceRequestStr}&creationDate={creationDateStr}&sompletionDate={completionDateStr}")
+	public List<Request> query2(@PathVariable String typeOfServiceRequestStr, @PathVariable String creationDateStr, @PathVariable String completionDateStr) {
+        Date creationDate, completionDate;
+
+        try {
+            creationDate = new SimpleDateFormat("yyyy-MM-dd").parse(creationDateStr);
+        } catch (ParseException e) {
+            return null;
+        }
+        try {
+            completionDate = new SimpleDateFormat("yyyy-MM-dd").parse(completionDateStr);
+        } catch (ParseException e) {
+            return null;
+        }
+
+        return (List<Request>) queryService.query2(typeOfServiceRequestStr, creationDate, completionDate);
+    }
 }
