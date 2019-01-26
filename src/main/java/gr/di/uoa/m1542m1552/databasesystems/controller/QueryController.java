@@ -38,7 +38,7 @@ public class QueryController {
     }
 
 	@GetMapping("/2/typeOfServiceRequest={typeOfServiceRequestStr}&creationDate={creationDateStr}&sompletionDate={completionDateStr}")
-	public List<Request> query2(@PathVariable String typeOfServiceRequestStr, @PathVariable String creationDateStr, @PathVariable String completionDateStr) {
+	public List<QueryResult> query2(@PathVariable String typeOfServiceRequestStr, @PathVariable String creationDateStr, @PathVariable String completionDateStr) {
         Date creationDate, completionDate;
 
         try {
@@ -52,6 +52,6 @@ public class QueryController {
             return null;
         }
 
-        return (List<Request>) queryService.query2(typeOfServiceRequestStr, creationDate, completionDate);
+        return queryService.query2(typeOfServiceRequestStr, creationDate, completionDate);
     }
 }
