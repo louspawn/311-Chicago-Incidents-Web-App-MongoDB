@@ -4,6 +4,7 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.grou
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.match;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.sort;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.limit;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -15,14 +16,17 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.aggregation.GroupOperation;
+import org.springframework.data.mongodb.core.aggregation.LimitOperation;
 import org.springframework.data.mongodb.core.aggregation.MatchOperation;
 import org.springframework.data.mongodb.core.aggregation.ProjectionOperation;
 import org.springframework.data.mongodb.core.aggregation.SortOperation;
+import org.springframework.data.mongodb.core.aggregation.UnwindOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
 
 import gr.di.uoa.m1542m1552.databasesystems.domain.QueryResult;
 import gr.di.uoa.m1542m1552.databasesystems.domain.Request;
+import gr.di.uoa.m1542m1552.databasesystems.domain.User;
 import gr.di.uoa.m1542m1552.databasesystems.repository.RequestRepository;
 import gr.di.uoa.m1542m1552.databasesystems.repository.UserRepository;
 
@@ -77,21 +81,70 @@ public class QueryService {
     public List<QueryResult> query3(Date date) {
         Date startOfDay = getTimeOfDay(date, 0, 0, 0, 0);
         Date endOfDay = getTimeOfDay(date, 23, 59, 59, 999);
-        System.out.println(startOfDay.toString());
-        System.out.println(endOfDay.toString());
 
         MatchOperation matchStage = Aggregation.match(new Criteria("creationDate").gte(startOfDay).lte(endOfDay));
         GroupOperation groupByStageAndCount = group("zipCode").count().as("total");
+        
         ProjectionOperation projectStage = Aggregation.project().andExpression("_id").as("zipCode").andInclude("total");
         SortOperation sortByStage = sort(new Sort(Sort.Direction.DESC, "total"));
 
-        Aggregation aggregation = newAggregation(matchStage, groupByStageAndCount, projectStage, sortByStage);
+        LimitOperation limitToFirstThree = limit(3);
+
+        Aggregation aggregation = newAggregation(matchStage, groupByStageAndCount, projectStage, sortByStage, limitToFirstThree);
 
         List<QueryResult> result = mongoTemplate.aggregate(aggregation, "requests", QueryResult.class).getMappedResults();
+		
+		return result;
+    }
 
-        if (result.size() > 3) {
-            result = result.size() > 0 ? result.subList(0, 3) : result;
-        }
+    public List<QueryResult> query5(Date startDate, Date endDate) {
+
+        MatchOperation matchStage = Aggregation.match(new Criteria("creationDate").gte(startDate).lte(endDate));
+        ProjectionOperation projectAndSubtractStage = Aggregation.project("_id", "typeOfServiceRequest").and("completionDate").minus("creationDate").as("completionTime");
+        GroupOperation groupByStageAndAvg = group("typeOfServiceRequest").avg("completionTime").as("avgCompletionTime");
+        ProjectionOperation projectStage = Aggregation.project().andExpression("_id").as("typeOfServiceRequest").andInclude("avgCompletionTime");
+
+        Aggregation aggregation = newAggregation(matchStage, projectAndSubtractStage, groupByStageAndAvg, projectStage);
+
+        List<QueryResult> result = mongoTemplate.aggregate(aggregation, "requests", QueryResult.class).getMappedResults();
+		
+		return result;
+    }
+
+    public List<Request> query7(Date date) {
+        Date startOfDay = getTimeOfDay(date, 0, 0, 0, 0);
+        Date endOfDay = getTimeOfDay(date, 23, 59, 59, 999);
+
+        MatchOperation matchStage = Aggregation.match(new Criteria("creationDate").gte(startOfDay).lte(endOfDay));
+    
+        SortOperation sortByStage = sort(new Sort(Sort.Direction.DESC, "upvotesCount"));
+
+        LimitOperation limitToFirstFifty = limit(50);
+
+        Aggregation aggregation = newAggregation(matchStage, sortByStage, limitToFirstFifty);
+
+        List<Request> result = mongoTemplate.aggregate(aggregation, "requests", Request.class).getMappedResults();
+		
+		return result;
+    }
+
+    public List<User> query9() {
+
+        UnwindOperation upvotesUnwindOperation = Aggregation.unwind("upvotes");
+
+        GroupOperation groupByStage = group("_id").addToSet("upvotes.ward").as("wards");
+
+        UnwindOperation wardsUnwindOperation = Aggregation.unwind("wards");
+
+        GroupOperation groupByStageAndCount = group("_id").count().as("total");
+    
+        SortOperation sortByStage = sort(new Sort(Sort.Direction.DESC, "total"));
+
+        LimitOperation limitToFirstFifty = limit(50);
+
+        Aggregation aggregation = newAggregation(upvotesUnwindOperation, groupByStage, wardsUnwindOperation, groupByStageAndCount, sortByStage, limitToFirstFifty);
+
+        List<User> result = mongoTemplate.aggregate(aggregation, "users", User.class).getMappedResults();
 		
 		return result;
     }

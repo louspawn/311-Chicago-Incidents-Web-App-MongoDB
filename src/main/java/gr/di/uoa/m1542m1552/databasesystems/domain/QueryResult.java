@@ -13,6 +13,8 @@ public class QueryResult {
 
     private Integer zipCode;
 
+    private Long avgCompletionTime;
+
     /**
      * @return the typeOfServiceRequest
      */
@@ -53,6 +55,20 @@ public class QueryResult {
      */
     public void setZipCode(Integer zipCode) {
         this.zipCode = zipCode;
+    }
+
+    /**
+     * @return the avgCompletionTime
+     */
+    public Long getAvgCompletionTime() {
+        return avgCompletionTime;
+    }
+
+    /**
+     * @param avgCompletionTime the avgCompletionTime to set
+     */
+    public void setAvgCompletionTime(Long avgCompletionTime) {
+        this.avgCompletionTime = avgCompletionTime;
     }
 
 }
