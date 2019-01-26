@@ -8,8 +8,8 @@ import gr.di.uoa.m1542m1552.databasesystems.enumerations.TypeOfServiceRequest;
 public class QueryResult {
 
     private String typeOfServiceRequest;
-
     private Integer total;
+    private String date;
 
     /**
      * @return the typeOfServiceRequest
@@ -23,6 +23,20 @@ public class QueryResult {
      */
     public void setTypeOfServiceRequest(TypeOfServiceRequest typeOfServiceRequest) {
         this.typeOfServiceRequest = typeOfServiceRequest.getText();
+    }
+
+    /**
+     * @return the date
+     */
+    public String getDate() {
+        return date;
+    }
+
+    /**
+     * @param date the date to set
+     */
+    public void setDate(String date) {
+        this.date = date;
     }
 
     /**

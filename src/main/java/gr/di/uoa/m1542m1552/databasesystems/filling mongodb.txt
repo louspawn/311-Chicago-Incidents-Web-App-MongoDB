@@ -39,3 +39,10 @@ db.requests.find().forEach(function(r) {
     db.requests.save(r);
     }
 );
+
+db.requests.find().forEach(function(r) {
+    r.upvotes = []; 
+    r.upvotesCount = 0; 
+    db.requests.save(r);
+    }
+);
