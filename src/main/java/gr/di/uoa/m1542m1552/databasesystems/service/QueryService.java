@@ -35,7 +35,7 @@ public class QueryService {
 
     public List<QueryResult> query1(Date startDate, Date endDate) {
 
-        MatchOperation matchStage = Aggregation.match(new Criteria("creationDate").gte(startDate).and("creationDate").lte(endDate));
+        MatchOperation matchStage = Aggregation.match(new Criteria("creationDate").gte(startDate).lte(endDate));
         GroupOperation groupByStageAndCount = group("typeOfServiceRequest").count().as("total");
         ProjectionOperation projectStage = Aggregation.project().andExpression("_id").as("typeOfServiceRequest").andExpression("total").as("total");
         SortOperation sortByStage = sort(new Sort(Sort.Direction.DESC, "total"));
