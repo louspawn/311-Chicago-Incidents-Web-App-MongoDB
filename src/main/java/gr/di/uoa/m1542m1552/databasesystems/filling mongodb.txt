@@ -37,5 +37,4 @@ db.requests.find().forEach(function(r) {
     if (r.typeOfServiceRequest == "Pot Hole in Street") {r.typeOfServiceRequest = "Pothole in Street"}; 
     if (r.typeOfServiceRequest == "Street Light - 1/Out") {r.typeOfServiceRequest = "Street Light Out"}; 
     db.requests.save(r);
-    }
-);
+});
