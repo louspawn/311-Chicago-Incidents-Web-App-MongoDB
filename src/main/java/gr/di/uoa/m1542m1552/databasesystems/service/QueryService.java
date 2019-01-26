@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.aggregation.GroupOperation;
 import org.springframework.data.mongodb.core.aggregation.MatchOperation;
 import org.springframework.data.mongodb.core.aggregation.SortOperation;
@@ -26,6 +27,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
 
 import gr.di.uoa.m1542m1552.databasesystems.domain.QueryResult;
+import gr.di.uoa.m1542m1552.databasesystems.domain.Request;
 import gr.di.uoa.m1542m1552.databasesystems.repository.RequestRepository;
 import gr.di.uoa.m1542m1552.databasesystems.repository.UserRepository;
 

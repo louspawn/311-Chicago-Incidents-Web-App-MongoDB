@@ -9,7 +9,7 @@ public class QueryResult {
 
     private String typeOfServiceRequest;
 
-    private Integer total;    
+    private Integer total;
 
     /**
      * @return the typeOfServiceRequest
