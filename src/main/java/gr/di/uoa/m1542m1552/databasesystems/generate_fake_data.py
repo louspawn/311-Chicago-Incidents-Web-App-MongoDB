@@ -11,9 +11,10 @@ def incr(loop_idx):
 
 def add_upvote(usr_id, req_id, telephone_number, ward):
     usr_query = {"_id": usr_id}
-    usr_values = {"$push": {"upvotes": [req_id, ward]}, "$inc": {"upvotesCount": 1}}
+    usr_values = {"$push": {"upvotes": {"requestId": str(req_id), "ward": ward}}, "$inc": {"upvotesCount": 1}}
+
     req_query = {"_id": req_id}
-    req_values = {"$push": {"upvotes": [usr_id, telephone_number]}, "$inc": {"upvotesCount": 1}}
+    req_values = {"$push": {"upvotes": {"userId": str(usr_id), "telephoneNumber": telephone_number}}, "$inc": {"upvotesCount": 1}}
 
     col_usr.update_one(usr_query, usr_values)
     col_req.update_one(req_query, req_values)
@@ -26,14 +27,14 @@ db = client["chicago_incidents"]
 col_req = db["requests"]
 col_usr = db["users"]
 
-create_users = False
-create_requests = True
+create_users = True
+create_requests = False
 
 if create_users:
     user_list = []
 
     for user in range(70000):
-        user_list.append({'_id': user,
+        user_list.append({'myid': user,
                           'fullName': fake.name(), 
                           'address': fake.address(),
                           'telephoneNumber': fake_telephone_number(),
@@ -69,12 +70,11 @@ if create_requests:
                 loop_idx = incr(loop_idx)
 
             user_available_votes[loop_idx] -= 1
-            usr_data = col_usr.find_one({"_id": loop_idx}, {"telephoneNumber": 1})
-            add_upvote(loop_idx, request['_id'], usr_data['telephoneNumber'], request['ward'])
+            usr_data = col_usr.find_one({"myid": loop_idx}, {"_id": 1, "telephoneNumber": 1})
+            add_upvote(usr_data['_id'], request['_id'], usr_data['telephoneNumber'], request['ward'])
             loop_idx = incr(loop_idx)
 
             if loop_idx == 0:
                 break
 
     exit(0)
-
