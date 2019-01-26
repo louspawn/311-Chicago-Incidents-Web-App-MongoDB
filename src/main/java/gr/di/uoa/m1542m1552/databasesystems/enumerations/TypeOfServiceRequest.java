@@ -5,11 +5,11 @@ public enum TypeOfServiceRequest {
     ALLEY_LIGHTS_OUT("Alley Light Out"),
     GARBAGE_CARTS("Garbage Cart Black Maintenance/Replacement"),
     GRAFFITI_REMOVAL("Graffiti Removal"),
-    POT_HOLES("Pot Hole in Street"),
+    POT_HOLES("Pothole in Street"),
     RODENT_BAITING("Rodent Baiting/Rat Complaint"),
     SANITATION_CODE_COMPLAINTS("Sanitation Code Violation"),
     LIGHTS_ALL_OUT("Street Lights - All/Out"),
-    LIGHT_ONE_OUT("Street Light - 1/Out"),
+    LIGHT_ONE_OUT("Street Light Out"),
     TREE_DEBRIS("Tree Debris"),
     TREE_TRIMS("Tree Trim");
 
