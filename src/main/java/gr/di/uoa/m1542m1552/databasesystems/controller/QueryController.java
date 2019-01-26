@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import gr.di.uoa.m1542m1552.databasesystems.domain.Request;
+import gr.di.uoa.m1542m1552.databasesystems.domain.QueryResult;
 import gr.di.uoa.m1542m1552.databasesystems.service.QueryService;
 
 @RestController
@@ -21,7 +21,7 @@ public class QueryController {
     QueryService queryService;
 
 	@GetMapping("/1/startDate={startDateStr}&endDate={endDateStr}")
-	public List<Request> query1(@PathVariable String startDateStr, @PathVariable String endDateStr) {
+	public List<QueryResult> query1(@PathVariable String startDateStr, @PathVariable String endDateStr) {
         Date startDate, endDate;
         try {
             startDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDateStr);

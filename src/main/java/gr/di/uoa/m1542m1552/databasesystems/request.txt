@@ -38,3 +38,7 @@
 	"requestId": "5c447f59da424854d031a350",
 	"userId": "5c447c14da424854d031a34b"
 }
+
+*** Queries ***
+
+1. http://localhost:8090/query/1/startDate=2010-08-05&endDate=2011-11-05

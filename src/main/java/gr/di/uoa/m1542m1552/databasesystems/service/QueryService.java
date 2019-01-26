@@ -16,6 +16,7 @@ import org.springframework.data.mongodb.core.aggregation.SortOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
 
+import gr.di.uoa.m1542m1552.databasesystems.domain.QueryResult;
 import gr.di.uoa.m1542m1552.databasesystems.domain.Request;
 import gr.di.uoa.m1542m1552.databasesystems.repository.RequestRepository;
 import gr.di.uoa.m1542m1552.databasesystems.repository.UserRepository;
@@ -30,9 +31,6 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.sort
 public class QueryService {
     @Autowired
     MongoTemplate mongoTemplate;
-    
-    @Autowired
-	MongoOperations mongoOperations;
 
     @Autowired
     private RequestRepository requestRepository;
@@ -40,7 +38,7 @@ public class QueryService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<Request> query1(Date startDate, Date endDate) {
+    public List<QueryResult> query1(Date startDate, Date endDate) {
         // Aggregation agg = newAggregation(
         // match(Criteria.where("_id").lt(10)),
         // group("hosting").count().as("total"),
@@ -63,13 +61,13 @@ public class QueryService {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         MatchOperation matchStage = Aggregation.match(new Criteria("creationDate").gte(startDate).and("completionDate").lte(endDate));
-        GroupOperation groupByStateAndSumPop = group("typeOfServiceRequest").count().as("total");
+        GroupOperation groupByStageAndCount = group("typeOfServiceRequest").count().as("total");
         ProjectionOperation projectStage = Aggregation.project("typeOfServiceRequest", "total");
-        SortOperation sortByPopDesc = sort(new Sort(Sort.Direction.DESC, "total"));
+        SortOperation sortByStage = sort(new Sort(Sort.Direction.DESC, "total"));
 
-        Aggregation aggregation = newAggregation(matchStage, groupByStateAndSumPop, projectStage, sortByPopDesc);
+        Aggregation aggregation = newAggregation(matchStage, groupByStageAndCount, projectStage, sortByStage);
 
-        List<Request> result = mongoOperations.aggregate(aggregation, "requests", Request.class).getMappedResults();
+        List<QueryResult> result = mongoTemplate.aggregate(aggregation, "requests", QueryResult.class).getMappedResults();
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
