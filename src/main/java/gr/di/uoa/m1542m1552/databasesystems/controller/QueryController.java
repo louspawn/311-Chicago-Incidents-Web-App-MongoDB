@@ -22,8 +22,8 @@ public class QueryController {
     @Autowired
     QueryService queryService;
 
-	@GetMapping("/1/startDate={startDateStr}&endDate={endDateStr}")
-	public List<QueryResult> query1(@PathVariable String startDateStr, @PathVariable String endDateStr) {
+    @GetMapping("/1/startDate={startDateStr}&endDate={endDateStr}")
+    public List<QueryResult> query1(@PathVariable String startDateStr, @PathVariable String endDateStr) {
         Date startDate, endDate;
         try {
             startDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDateStr);
@@ -39,8 +39,9 @@ public class QueryController {
         return queryService.query1(startDate, endDate);
     }
 
-	@GetMapping("/2/typeOfServiceRequest={typeOfServiceRequestStr}&creationDate={creationDateStr}&sompletionDate={completionDateStr}")
-	public List<QueryResult> query2(@PathVariable String typeOfServiceRequestStr, @PathVariable String creationDateStr, @PathVariable String completionDateStr) {
+    @GetMapping("/2/typeOfServiceRequest={typeOfServiceRequestStr}&creationDate={creationDateStr}&sompletionDate={completionDateStr}")
+    public List<QueryResult> query2(@PathVariable String typeOfServiceRequestStr, @PathVariable String creationDateStr,
+            @PathVariable String completionDateStr) {
         Date creationDate, completionDate;
 
         try {
