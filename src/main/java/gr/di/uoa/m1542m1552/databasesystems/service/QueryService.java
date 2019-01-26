@@ -21,6 +21,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
 
 import gr.di.uoa.m1542m1552.databasesystems.domain.QueryResult;
+import gr.di.uoa.m1542m1552.databasesystems.domain.Request;
 import gr.di.uoa.m1542m1552.databasesystems.repository.RequestRepository;
 import gr.di.uoa.m1542m1552.databasesystems.repository.UserRepository;
 
