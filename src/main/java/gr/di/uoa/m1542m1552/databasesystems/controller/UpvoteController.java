@@ -1,16 +1,12 @@
 package gr.di.uoa.m1542m1552.databasesystems.controller;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import gr.di.uoa.m1542m1552.databasesystems.domain.Request;
@@ -31,10 +27,14 @@ public class UpvoteController {
         String userId = bodyMap.get("userId");
         String requestId = bodyMap.get("requestId");
 
+        if(userId == null || requestId == null) {
+            return "Bad request! Null userId or requestId";
+        }
+
         Optional<Request> request = requestService.getRequest(requestId);
         Optional<User> user = userService.getUser(userId);
 
-        if(user == null || request == null) {
+        if(!user.isPresent() || !request.isPresent()) {
             return "Bad request! Wrong userId or requestId";
         }
 
