@@ -11,6 +11,8 @@ public class QueryResult {
     private Integer total;
     private String date;
 
+    private Integer zipCode;
+
     /**
      * @return the typeOfServiceRequest
      */
@@ -51,6 +53,20 @@ public class QueryResult {
      */
     public void setTotal(Integer total) {
         this.total = total;
+    }
+
+    /**
+     * @return the zipCode
+     */
+    public Integer getZipCode() {
+        return zipCode;
+    }
+
+    /**
+     * @param zipCode the zipCode to set
+     */
+    public void setZipCode(Integer zipCode) {
+        this.zipCode = zipCode;
     }
 
 }

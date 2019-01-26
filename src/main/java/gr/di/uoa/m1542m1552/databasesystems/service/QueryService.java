@@ -5,6 +5,7 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.matc
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.sort;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +35,16 @@ public class QueryService {
 
     @Autowired
     private UserRepository userRepository;
+
+    public Date getTimeOfDay(Date date, int hours, int minutes, int seconds, int milliseconds) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, hours);
+        calendar.set(Calendar.MINUTE, minutes);
+        calendar.set(Calendar.SECOND, seconds);
+        calendar.set(Calendar.MILLISECOND, milliseconds);
+        return calendar.getTime();
+    }
 
     public List<QueryResult> query1(Date startDate, Date endDate) {
 
@@ -89,6 +100,29 @@ public class QueryService {
 
         List<QueryResult> result = mongoTemplate.aggregate(aggregation, "requests", QueryResult.class).getMappedResults();
 
+		return result;
+    }
+}
+
+    public List<QueryResult> query3(Date date) {
+        Date startOfDay = getTimeOfDay(date, 0, 0, 0, 0);
+        Date endOfDay = getTimeOfDay(date, 23, 59, 59, 999);
+        System.out.println(startOfDay.toString());
+        System.out.println(endOfDay.toString());
+
+        MatchOperation matchStage = Aggregation.match(new Criteria("creationDate").gte(startOfDay).lte(endOfDay));
+        GroupOperation groupByStageAndCount = group("zipCode").count().as("total");
+        ProjectionOperation projectStage = Aggregation.project().andExpression("_id").as("zipCode").andInclude("total");
+        SortOperation sortByStage = sort(new Sort(Sort.Direction.DESC, "total"));
+
+        Aggregation aggregation = newAggregation(matchStage, groupByStageAndCount, projectStage, sortByStage);
+
+        List<QueryResult> result = mongoTemplate.aggregate(aggregation, "requests", QueryResult.class).getMappedResults();
+
+        if (result.size() > 3) {
+            result = result.size() > 0 ? result.subList(0, 3) : result;
+        }
+		
 		return result;
     }
 }

@@ -56,4 +56,16 @@ public class QueryController {
 
         return queryService.query2(typeOfServiceRequestStr, creationDate, completionDate);
     }
+
+	@GetMapping("/3/date={dateStr}")
+	public List<QueryResult> query1(@PathVariable String dateStr) {
+        Date date;
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
+        } catch (ParseException e) {
+            return null;
+        }
+
+        return queryService.query3(date);
+    }
 }
