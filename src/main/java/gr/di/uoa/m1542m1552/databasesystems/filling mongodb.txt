@@ -32,3 +32,10 @@ mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --column
 mongoimport -d chicago_incidents -c requests --type csv --ignoreBlanks  --columnsHaveTypes --fields "creationDate.date(2006-01-02T15:04:05),status.string(),completionDate.date(2006-01-02T15:04:05),serviceRequestNumber.string(),typeOfServiceRequest.string(),whereIsLocated.string(),streetAddress.string(),zipCode.int32(),xCoordinate.double(),yCoordinate.double(),ward.int32(),policeDistrict.int32(),communityArea.int32(),latitude.double(),longitude.double(),location.string()" --file 311-service-requests-tree-trims.csv
 
 db.requests.find().forEach(function(r) {if (r.longitude && r.latitude) {r.geoLocation = {type: "Point", coordinates:[r.longitude, r.latitude]}}; delete(r.latitude); delete(r.longitude); r.upvotes = []; r.upvotesCount = 0; db.requests.save(r);});
+
+db.requests.find().forEach(function(r) {
+    if (r.typeOfServiceRequest == "Pot Hole in Street") {r.typeOfServiceRequest = "Pothole in Street"}; 
+    if (r.typeOfServiceRequest == "Street Light - 1/Out") {r.typeOfServiceRequest = "Street Light Out"}; 
+    db.requests.save(r);
+    }
+);
