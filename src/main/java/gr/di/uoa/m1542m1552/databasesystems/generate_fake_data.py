@@ -27,8 +27,8 @@ db = client["chicago_incidents"]
 col_req = db["requests"]
 col_usr = db["users"]
 
-create_users = True
-create_requests = False
+create_users = False
+create_requests = True
 
 if create_users:
     user_list = []
@@ -48,6 +48,11 @@ if create_requests:
     loop_idx = 0
     s = np.random.normal(0, 40, 70000) 
     user_available_votes = np.abs(s.round().astype(int)) 
+    user_data_cur = col_usr.find({})
+
+    user_data = []
+    for user in user_data_cur:
+        user_data.append({"_id": user["_id"], "telephoneNumber": user['telephoneNumber']})
 
     agg_pipeline = [{"$sample": {"size": 1000000}}, 
                     {"$project": {"_id": 1, "typeOfServiceRequest": 1, "ward": 1}}]
@@ -70,8 +75,8 @@ if create_requests:
                 loop_idx = incr(loop_idx)
 
             user_available_votes[loop_idx] -= 1
-            usr_data = col_usr.find_one({"myid": loop_idx}, {"_id": 1, "telephoneNumber": 1})
-            add_upvote(usr_data['_id'], request['_id'], usr_data['telephoneNumber'], request['ward'])
+            # usr_data = col_usr.find_one({"myid": loop_idx}, {"_id": 1, "telephoneNumber": 1})
+            add_upvote(user_data[loop_idx]['_id'], request['_id'], user_data[loop_idx]['telephoneNumber'], request['ward'])
             loop_idx = incr(loop_idx)
 
             if loop_idx == 0:
