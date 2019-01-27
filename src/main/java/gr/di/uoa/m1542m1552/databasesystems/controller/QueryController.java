@@ -24,8 +24,19 @@ public class QueryController {
 
     @GetMapping("/1/startDate={startDateStr}&endDate={endDateStr}")
     public List<QueryResult> query1(@PathVariable String startDateStr, @PathVariable String endDateStr) {
+        Date startDate, endDate;
+        try {
+            startDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDateStr);
+        } catch (ParseException e) {
+            return null;
+        }
+        try {
+            endDate = new SimpleDateFormat("yyyy-MM-dd").parse(endDateStr);
+        } catch (ParseException e) {
+            return null;
+        }
 
-        return queryService.query1(startDateStr, endDateStr);
+        return queryService.query1(startDate, endDate);
     }
 
     @GetMapping("/2/typeOfServiceRequest={typeOfServiceRequestStr}&creationDate={creationDateStr}&sompletionDate={completionDateStr}")
@@ -49,8 +60,14 @@ public class QueryController {
 
 	@GetMapping("/3/date={dateStr}")
 	public List<QueryResult> query3(@PathVariable String dateStr) {
+        Date date;
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
+        } catch (ParseException e) {
+            return null;
+        }
 
-        return queryService.query3(dateStr);
+        return queryService.query3(date);
     }
 
     @GetMapping("/4/typeOfServiceRequest={typeOfServiceRequestStr}")
@@ -61,8 +78,19 @@ public class QueryController {
 
 	@GetMapping("/5/startDate={startDateStr}&endDate={endDateStr}")
 	public List<QueryResult> query5(@PathVariable String startDateStr, @PathVariable String endDateStr) {
+        Date startDate, endDate;
+        try {
+            startDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDateStr);
+        } catch (ParseException e) {
+            return null;
+        }
+        try {
+            endDate = new SimpleDateFormat("yyyy-MM-dd").parse(endDateStr);
+        } catch (ParseException e) {
+            return null;
+        }
 
-        return queryService.query5(startDateStr, endDateStr);
+        return queryService.query5(startDate, endDate);
     }
     
     @GetMapping("/6/date={dateStr}&long1={long1Str}&lat1={lat1Str}&long2={long2Str}&lat2={lat2Str}")
@@ -76,13 +104,26 @@ public class QueryController {
         lat2 = Double.valueOf(lat2Str);
         long2 = Double.valueOf(long2Str);
 
-        return queryService.query6(dateStr, long1, lat1, long2, lat2);
+        Date date;
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
+        } catch (ParseException e) {
+            return null;
+        }
+
+        return queryService.query6(date, long1, lat1, long2, lat2);
     }
 
 	@GetMapping("/7/date={dateStr}")
-	public List<Request> query7(@PathVariable String dateStr) {
+	public List<QueryResult> query7(@PathVariable String dateStr) {
+        Date date;
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
+        } catch (ParseException e) {
+            return null;
+        }
 
-        return queryService.query7(dateStr);
+        return queryService.query7(date);
     }
 
     @GetMapping("/8/")
