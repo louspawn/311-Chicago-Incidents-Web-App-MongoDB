@@ -101,6 +101,13 @@ public class QueryController {
 
 	@GetMapping("/9/")
 	public List<QueryResult> query9() {
+
         return queryService.query9();
+    }
+
+	@GetMapping("/11/fullName={fullName}")
+	public QueryResult query11(@PathVariable String fullName) {
+
+        return queryService.query11(fullName);
     }
 }

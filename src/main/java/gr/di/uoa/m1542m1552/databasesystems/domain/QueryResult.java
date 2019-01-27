@@ -1,5 +1,7 @@
 package gr.di.uoa.m1542m1552.databasesystems.domain;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import gr.di.uoa.m1542m1552.databasesystems.enumerations.TypeOfServiceRequest;
@@ -12,6 +14,7 @@ public class QueryResult {
     private Integer total;
     private String date;
     private Integer zipCode;
+    private List<Integer> wards;
     private Long avgCompletionTime;
 
     /**
@@ -82,6 +85,20 @@ public class QueryResult {
      */
     public void setZipCode(Integer zipCode) {
         this.zipCode = zipCode;
+    }
+
+    /**
+     * @return the wards
+     */
+    public List<Integer> getWards() {
+        return wards;
+    }
+
+    /**
+     * @param wards the wards to set
+     */
+    public void setWards(List<Integer> wards) {
+        this.wards = wards;
     }
 
     /**

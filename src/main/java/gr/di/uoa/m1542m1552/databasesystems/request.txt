@@ -58,3 +58,4 @@ http://localhost:8090/query/7/date=2011-01-06
 http://localhost:8090/query/9/
 10.
 11.
+http://localhost:8090/query/11/fullName=Jeffrey Blackwell

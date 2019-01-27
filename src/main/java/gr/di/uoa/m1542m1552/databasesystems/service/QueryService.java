@@ -113,11 +113,9 @@ public class QueryService {
         Date endOfDay = getTimeOfDay(date, 23, 59, 59, 999);
 
         MatchOperation matchStage = Aggregation.match(new Criteria("creationDate").gte(startOfDay).lte(endOfDay));
-        GroupOperation groupByStageAndCount = group("zipCode").count().as("total");
-        
+        GroupOperation groupByStageAndCount = group("zipCode").count().as("total");        
         ProjectionOperation projectStage = Aggregation.project().andExpression("_id").as("zipCode").andInclude("total");
         SortOperation sortByStage = sort(new Sort(Sort.Direction.DESC, "total"));
-
         LimitOperation limitToFirstThree = limit(3);
 
         Aggregation aggregation = newAggregation(matchStage, groupByStageAndCount, projectStage, sortByStage, limitToFirstThree);
@@ -145,10 +143,8 @@ public class QueryService {
         Date startOfDay = getTimeOfDay(date, 0, 0, 0, 0);
         Date endOfDay = getTimeOfDay(date, 23, 59, 59, 999);
 
-        MatchOperation matchStage = Aggregation.match(new Criteria("creationDate").gte(startOfDay).lte(endOfDay));
-    
+        MatchOperation matchStage = Aggregation.match(new Criteria("creationDate").gte(startOfDay).lte(endOfDay));    
         SortOperation sortByStage = sort(new Sort(Sort.Direction.DESC, "upvotesCount"));
-
         LimitOperation limitToFirstFifty = limit(50);
 
         Aggregation aggregation = newAggregation(matchStage, sortByStage, limitToFirstFifty);
@@ -158,20 +154,15 @@ public class QueryService {
 		return result;
     }
 
+    //  db.users.aggregate([{$unwind: "$upvotes"}, {$group: {'_id': "$_id", 'wards': { $addToSet: "$upvotes.ward" }}}, {$unwind: "$wards"}, {$group: {'_id': '$_id', count: { $sum: 1 }}}])
     public List<QueryResult> query9() {
 
         UnwindOperation upvotesUnwindOperation = Aggregation.unwind("upvotes");
-
         GroupOperation groupByStage = group("_id").addToSet("upvotes.ward").as("wards");
-
         UnwindOperation wardsUnwindOperation = Aggregation.unwind("wards");
-
         GroupOperation groupByStageAndCount = group("_id").count().as("total");
-
-        ProjectionOperation projectStage = Aggregation.project().andExpression("_id").as("userId").andInclude("total");
-    
+        ProjectionOperation projectStage = Aggregation.project().andExpression("_id").as("userId").andInclude("total");    
         SortOperation sortByStage = sort(new Sort(Sort.Direction.DESC, "total"));
-
         LimitOperation limitToFirstFifty = limit(50);
 
         Aggregation aggregation = newAggregation(upvotesUnwindOperation, groupByStage, wardsUnwindOperation, groupByStageAndCount, projectStage, sortByStage, limitToFirstFifty);
@@ -180,4 +171,20 @@ public class QueryService {
 		
 		return result;
     }
+
+    //[{$match: {'fullName': 'Jeffrey Blackwell'}}, {$unwind: '$upvotes'}, {$group: {'_id': '$_id', 'wards': {$addToSet: '$upvotes.ward'}}}, {$unwind: '$wards'}]);
+    public QueryResult query11(String fullName) {
+
+        MatchOperation matchStage = Aggregation.match(new Criteria("fullName").is(fullName));
+        UnwindOperation upvotesUnwindOperation = Aggregation.unwind("upvotes");
+        GroupOperation groupByStage = group("_id").addToSet("upvotes.ward").as("wards");
+        // UnwindOperation wardsUnwindOperation = Aggregation.unwind("wards");
+
+        Aggregation aggregation = newAggregation(matchStage, upvotesUnwindOperation, groupByStage);
+
+        QueryResult result = mongoTemplate.aggregate(aggregation, "users", QueryResult.class).getUniqueMappedResult();
+		
+		return result;
+    }
+
 }
