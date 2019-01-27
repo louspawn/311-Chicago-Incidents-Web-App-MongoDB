@@ -24,19 +24,8 @@ public class QueryController {
 
     @GetMapping("/1/startDate={startDateStr}&endDate={endDateStr}")
     public List<QueryResult> query1(@PathVariable String startDateStr, @PathVariable String endDateStr) {
-        Date startDate, endDate;
-        try {
-            startDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDateStr);
-        } catch (ParseException e) {
-            return null;
-        }
-        try {
-            endDate = new SimpleDateFormat("yyyy-MM-dd").parse(endDateStr);
-        } catch (ParseException e) {
-            return null;
-        }
 
-        return queryService.query1(startDate, endDate);
+        return queryService.query1(startDateStr, endDateStr);
     }
 
     @GetMapping("/2/typeOfServiceRequest={typeOfServiceRequestStr}&creationDate={creationDateStr}&sompletionDate={completionDateStr}")
@@ -60,43 +49,20 @@ public class QueryController {
 
 	@GetMapping("/3/date={dateStr}")
 	public List<QueryResult> query3(@PathVariable String dateStr) {
-        Date date;
-        try {
-            date = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
-        } catch (ParseException e) {
-            return null;
-        }
 
-        return queryService.query3(date);
+        return queryService.query3(dateStr);
     }
 
 	@GetMapping("/5/startDate={startDateStr}&endDate={endDateStr}")
 	public List<QueryResult> query5(@PathVariable String startDateStr, @PathVariable String endDateStr) {
-        Date startDate, endDate;
-        try {
-            startDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDateStr);
-        } catch (ParseException e) {
-            return null;
-        }
-        try {
-            endDate = new SimpleDateFormat("yyyy-MM-dd").parse(endDateStr);
-        } catch (ParseException e) {
-            return null;
-        }
 
-        return queryService.query5(startDate, endDate);
+        return queryService.query5(startDateStr, endDateStr);
     }
 
 	@GetMapping("/7/date={dateStr}")
 	public List<Request> query7(@PathVariable String dateStr) {
-        Date date;
-        try {
-            date = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
-        } catch (ParseException e) {
-            return null;
-        }
 
-        return queryService.query7(date);
+        return queryService.query7(dateStr);
     }
 
 	@GetMapping("/9/")

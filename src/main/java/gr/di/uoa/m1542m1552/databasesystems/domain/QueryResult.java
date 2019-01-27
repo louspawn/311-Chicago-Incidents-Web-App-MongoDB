@@ -16,6 +16,7 @@ public class QueryResult {
     private Integer zipCode;
     private List<Integer> wards;
     private Long avgCompletionTime;
+    private List<RequestType> requestTypes;
 
     /**
      * @return the userId
@@ -115,4 +116,52 @@ public class QueryResult {
         this.avgCompletionTime = avgCompletionTime;
     }
 
+    /**
+     * @return the requestTypes
+     */
+    public List<RequestType> getRequestTypes() {
+        return requestTypes;
+    }
+
+    /**
+     * @param requestTypes the requestTypes to set
+     */
+    public void setRequestTypes(List<RequestType> requestTypes) {
+        this.requestTypes = requestTypes;
+    }
+
+}
+
+class RequestType {
+
+    private String type;
+    private Integer total;
+
+    /**
+     * @return the type
+     */
+    public TypeOfServiceRequest getType() {
+        return TypeOfServiceRequest.fromString(type);
+    }
+
+    /**
+     * @return the total
+     */
+    public Integer getTotal() {
+        return total;
+    }
+
+    /**
+     * @param total the total to set
+     */
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(TypeOfServiceRequest type) {
+        this.type = type.getText();
+    }
 }

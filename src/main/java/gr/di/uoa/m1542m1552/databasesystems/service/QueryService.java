@@ -9,6 +9,9 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.limi
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
+
+import com.mongodb.BasicDBObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -41,120 +44,122 @@ public class QueryService {
     @Autowired
     private UserRepository userRepository;
 
-    public Date getTimeOfDay(Date date, int hours, int minutes, int seconds, int milliseconds) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.HOUR_OF_DAY, hours);
-        calendar.set(Calendar.MINUTE, minutes);
-        calendar.set(Calendar.SECOND, seconds);
-        calendar.set(Calendar.MILLISECOND, milliseconds);
-        return calendar.getTime();
-    }
+    public List<QueryResult> query1(String startDate, String endDate) {
 
-    public List<QueryResult> query1(Date startDate, Date endDate) {
-
-        MatchOperation matchStage = Aggregation.match(new Criteria("creationDate").gte(startDate).lte(endDate));
+        ProjectionOperation projectDateStage = Aggregation.project("_id", "typeOfServiceRequest")
+                .andExpression("creationDate").dateAsFormattedString("%Y-%m-%d").as("formatedDate");
+        MatchOperation matchStage = Aggregation.match(new Criteria("formatedDate").gte(startDate).lte(endDate));
         GroupOperation groupByStageAndCount = group("typeOfServiceRequest").count().as("total");
-        ProjectionOperation projectStage = Aggregation.project().andExpression("_id").as("typeOfServiceRequest").andInclude("total");
+        ProjectionOperation projectStage = Aggregation.project().andExpression("_id").as("typeOfServiceRequest")
+                .andInclude("total");
         SortOperation sortByStage = sort(new Sort(Sort.Direction.DESC, "total"));
 
-        Aggregation aggregation = newAggregation(matchStage, groupByStageAndCount, projectStage, sortByStage);
+        Aggregation aggregation = newAggregation(projectDateStage, matchStage, groupByStageAndCount, projectStage,
+                sortByStage);
 
-        List<QueryResult> result = mongoTemplate.aggregate(aggregation, "requests", QueryResult.class).getMappedResults();
-		
-		return result;
+        List<QueryResult> result = mongoTemplate.aggregate(aggregation, "requests", QueryResult.class)
+                .getMappedResults();
+
+        return result;
     }
 
-
-
-            // _id : {year: { $year: "$creationDate" }, month: { $month: "$creationDate" }, day: { $dayOfMonth: "$creationDate" }},
-            // yearMonthDay: { $dateToString: { format: "%Y-%m-%d", date: "$date" } }
+    // _id : {year: { $year: "$creationDate" }, month: { $month: "$creationDate" },
+    // day: { $dayOfMonth: "$creationDate" }},
+    // yearMonthDay: { $dateToString: { format: "%Y-%m-%d", date: "$date" } }
     // mongodb query
     // db.requests.aggregate([
-    //     { $match: {"typeOfServiceRequest": "Tree Trim", "policeDistrict": 8}},
-    //     { $group : {
-    //         _id : {yearMonthDay: { $dateToString: { format: "%Y-%m-%d", date: "$creationDate" }}},
-    //         count: { $sum: 1 }
-    //     }
-    //     }
+    // { $match: {"typeOfServiceRequest": "Tree Trim", "policeDistrict": 8}},
+    // { $group : {
+    // _id : {yearMonthDay: { $dateToString: { format: "%Y-%m-%d", date:
+    // "$creationDate" }}},
+    // count: { $sum: 1 }
+    // }
+    // }
     // ])
 
     // Criteria criteria = Criteria.where("user._id").is(paramuserid).andOperator(
-    //         Criteria.where("datetime").gte(paramfirstdate),
-    //         Criteria.where("datetime").lt(paramseconddate)
-    //                 );
-    // AggregationOperation match = Aggregation.match(criteria);   
+    // Criteria.where("datetime").gte(paramfirstdate),
+    // Criteria.where("datetime").lt(paramseconddate)
+    // );
+    // AggregationOperation match = Aggregation.match(criteria);
 
-    // List<AggregationOperation> aggregationoperations = new ArrayList <AggregationOperation>();  
+    // List<AggregationOperation> aggregationoperations = new ArrayList
+    // <AggregationOperation>();
     // aggregationoperations.add(match);
     // aggregationoperations.add(Aggregation.project("ip","datetime").andExpression("datetime").dateAsFormattedString("%d-%m-%Y").as("formateddate"));
     // aggregationoperations.add(Aggregation.group("ip","formateddate").count().as("TOT"));
-    // AggregationResults<?> aggregationresults = this.mngT.aggregate(Aggregation.newAggregation(aggregationoperations), Login.class, Object.class);
+    // AggregationResults<?> aggregationresults =
+    // this.mngT.aggregate(Aggregation.newAggregation(aggregationoperations),
+    // Login.class, Object.class);
 
-    
     public List<QueryResult> query2(String typeOfServiceRequest, Date creationDate, Date completionDate) {
         MatchOperation filter = match(Criteria.where("creationDate").gte(creationDate).lte(completionDate)
-                                      .and("typeOfServiceRequest").is(typeOfServiceRequest));
+                .and("typeOfServiceRequest").is(typeOfServiceRequest));
 
-        // ProjectionOperation projectStage = Aggregation.project("creationDate", "typeOfServiceRequest").andExpression("_id").as("typeOfServiceRequest").andInclude("total");
-        ProjectionOperation p = Aggregation.project().andExpression("creationDate").dateAsFormattedString("%Y-%m-%d").as("formatedDate");
+        // ProjectionOperation projectStage = Aggregation.project("creationDate",
+        // "typeOfServiceRequest").andExpression("_id").as("typeOfServiceRequest").andInclude("total");
+        ProjectionOperation p = Aggregation.project().andExpression("creationDate").dateAsFormattedString("%Y-%m-%d")
+                .as("formatedDate");
 
-        // GroupOperation groupByServiceRequest = group("formatedDate").count().as("total");
-        
-        Aggregation aggregation = newAggregation(filter, p); //, groupByServiceRequest); //, sortByPopDesc);
+        // GroupOperation groupByServiceRequest =
+        // group("formatedDate").count().as("total");
 
-        List<QueryResult> result = mongoTemplate.aggregate(aggregation, "requests", QueryResult.class).getMappedResults();
+        Aggregation aggregation = newAggregation(filter, p); // , groupByServiceRequest); //, sortByPopDesc);
 
-		return result;
+        List<QueryResult> result = mongoTemplate.aggregate(aggregation, "requests", QueryResult.class)
+                .getMappedResults();
+
+        return result;
     }
 
-    public List<QueryResult> query3(Date date) {
-        Date startOfDay = getTimeOfDay(date, 0, 0, 0, 0);
-        Date endOfDay = getTimeOfDay(date, 23, 59, 59, 999);
+    public List<QueryResult> query3(String date) {
 
-        MatchOperation matchStage = Aggregation.match(new Criteria("creationDate").gte(startOfDay).lte(endOfDay));
-        GroupOperation groupByStageAndCount = group("zipCode").count().as("total");        
-        ProjectionOperation projectStage = Aggregation.project().andExpression("_id").as("zipCode").andInclude("total");
-        SortOperation sortByStage = sort(new Sort(Sort.Direction.DESC, "total"));
-        LimitOperation limitToFirstThree = limit(3);
+        ProjectionOperation projectDateStage = Aggregation.project("_id", "zipCode", "typeOfServiceRequest").andExpression("creationDate")
+                .dateAsFormattedString("%Y-%m-%d").as("formatedDate");
+        MatchOperation matchStage = Aggregation.match(new Criteria("formatedDate").is(date));
+        GroupOperation groupByStageAndCount = group("zipCode", "typeOfServiceRequest").count().as("total");
+        GroupOperation groupByStageAndPush = group("_id.zipCode").push(new BasicDBObject("type", "$_id.typeOfServiceRequest").append("total", "$total")).as("requestTypes");
+        UnwindOperation typesUnwindOperation = Aggregation.unwind("requestTypes");
+        SortOperation sortByStage = sort(new Sort(Sort.Direction.DESC, "_id", "requestTypes.total"));
+        GroupOperation groupByStageAndPushAgain = group("_id").push("requestTypes").as("requestTypes");
+        ProjectionOperation projectStageAndSlice = Aggregation.project().and("_id").as("zipCode").and("requestTypes").slice(3).as("requestTypes");
 
-        Aggregation aggregation = newAggregation(matchStage, groupByStageAndCount, projectStage, sortByStage, limitToFirstThree);
+        Aggregation aggregation = newAggregation(projectDateStage, matchStage, groupByStageAndCount, groupByStageAndPush, typesUnwindOperation, sortByStage, groupByStageAndPushAgain, projectStageAndSlice);
 
         List<QueryResult> result = mongoTemplate.aggregate(aggregation, "requests", QueryResult.class).getMappedResults();
 		
 		return result;
     }
 
-    public List<QueryResult> query5(Date startDate, Date endDate) {
+    public List<QueryResult> query5(String startDate, String endDate) {
 
-        MatchOperation matchStage = Aggregation.match(new Criteria("creationDate").gte(startDate).lte(endDate));
+        ProjectionOperation projectDateStage = Aggregation.project("_id", "typeOfServiceRequest", "creationDate", "completionDate").andExpression("creationDate").dateAsFormattedString("%Y-%m-%d").as("formatedDate");
+        MatchOperation matchStage = Aggregation.match(new Criteria("formatedDate").gte(startDate).lte(endDate));
         ProjectionOperation projectAndSubtractStage = Aggregation.project("_id", "typeOfServiceRequest").and("completionDate").minus("creationDate").as("completionTime");
         GroupOperation groupByStageAndAvg = group("typeOfServiceRequest").avg("completionTime").as("avgCompletionTime");
         ProjectionOperation projectStage = Aggregation.project().andExpression("_id").as("typeOfServiceRequest").andInclude("avgCompletionTime");
 
-        Aggregation aggregation = newAggregation(matchStage, projectAndSubtractStage, groupByStageAndAvg, projectStage);
+        Aggregation aggregation = newAggregation(projectDateStage, matchStage, projectAndSubtractStage, groupByStageAndAvg, projectStage);
 
         List<QueryResult> result = mongoTemplate.aggregate(aggregation, "requests", QueryResult.class).getMappedResults();
 		
 		return result;
     }
 
-    public List<Request> query7(Date date) {
-        Date startOfDay = getTimeOfDay(date, 0, 0, 0, 0);
-        Date endOfDay = getTimeOfDay(date, 23, 59, 59, 999);
+    public List<Request> query7(String date) {
 
-        MatchOperation matchStage = Aggregation.match(new Criteria("creationDate").gte(startOfDay).lte(endOfDay));    
+        ProjectionOperation projectDateStage = Aggregation.project("upvotes", "upvotesCount").andExpression("creationDate").dateAsFormattedString("%Y-%m-%d").as("formatedDate");
+        MatchOperation matchStage = Aggregation.match(new Criteria("formatedDate").is(date));    
         SortOperation sortByStage = sort(new Sort(Sort.Direction.DESC, "upvotesCount"));
         LimitOperation limitToFirstFifty = limit(50);
 
-        Aggregation aggregation = newAggregation(matchStage, sortByStage, limitToFirstFifty);
+        Aggregation aggregation = newAggregation(projectDateStage, matchStage, sortByStage, limitToFirstFifty);
 
         List<Request> result = mongoTemplate.aggregate(aggregation, "requests", Request.class).getMappedResults();
 		
 		return result;
     }
 
-    //  db.users.aggregate([{$unwind: "$upvotes"}, {$group: {'_id': "$_id", 'wards': { $addToSet: "$upvotes.ward" }}}, {$unwind: "$wards"}, {$group: {'_id': '$_id', count: { $sum: 1 }}}])
     public List<QueryResult> query9() {
 
         UnwindOperation upvotesUnwindOperation = Aggregation.unwind("upvotes");
@@ -172,13 +177,11 @@ public class QueryService {
 		return result;
     }
 
-    //[{$match: {'fullName': 'Jeffrey Blackwell'}}, {$unwind: '$upvotes'}, {$group: {'_id': '$_id', 'wards': {$addToSet: '$upvotes.ward'}}}, {$unwind: '$wards'}]);
     public QueryResult query11(String fullName) {
 
         MatchOperation matchStage = Aggregation.match(new Criteria("fullName").is(fullName));
         UnwindOperation upvotesUnwindOperation = Aggregation.unwind("upvotes");
         GroupOperation groupByStage = group("_id").addToSet("upvotes.ward").as("wards");
-        // UnwindOperation wardsUnwindOperation = Aggregation.unwind("wards");
 
         Aggregation aggregation = newAggregation(matchStage, upvotesUnwindOperation, groupByStage);
 

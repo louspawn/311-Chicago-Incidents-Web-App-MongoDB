@@ -38,24 +38,3 @@
 	"requestId": "5c447f59da424854d031a350",
 	"userId": "5c447c14da424854d031a34b"
 }
-
-*** Queries ***
-
-1.
-http://localhost:8090/query/1/startDate=2010-08-05&endDate=2011-11-05
-2.
-localhost:8090/query/2/typeOfServiceRequest=TREE_TRIMS&creationDate=2018-10-01&sompletionDate=2018-11-15
-3.
-http://localhost:8090/query/3/date=2011-01-06
-4.
-5.
-http://localhost:8090/query/5/startDate=2010-08-05&endDate=2011-11-05
-6.
-7.
-http://localhost:8090/query/7/date=2011-01-06
-8.
-9.
-http://localhost:8090/query/9/
-10.
-11.
-http://localhost:8090/query/11/fullName=Jeffrey Blackwell
