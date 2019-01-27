@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,6 +19,12 @@ import gr.di.uoa.m1542m1552.databasesystems.enumerations.TypeOfServiceRequest;
 
 @Document(collection = "requests")
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@CompoundIndexes({
+    @CompoundIndex(name = "creationDate_typeOfServiceRequest", def = "{'creationDate' : 1, 'typeOfServiceRequest': 1}"),
+    @CompoundIndex(name = "typeOfServiceRequest_creationDate", def = "{'typeOfServiceRequest' : 1, 'creationDate': 1}"),
+    @CompoundIndex(name = "creationDate_zipCode", def = "{'creationDate' : 1, 'zipCode': 1}"),
+    @CompoundIndex(name = "creationDate_upvotesCount", def = "{'creationDate' : 1, 'upvotesCount': 1}")
+})
 public class Request {
 
     /* Common request attributes */
