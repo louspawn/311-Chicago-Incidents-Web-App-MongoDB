@@ -38,7 +38,6 @@
 	"requestId": "5c447f59da424854d031a350",
 	"userId": "5c447c14da424854d031a34b"
 }
-<<<<<<< HEAD
 
 *** Queries ***
 
@@ -68,5 +67,3 @@ localhost:8090/query/8/
 9.
 10.
 11.
-=======
->>>>>>> ec0f274091d3fbe377b585be591748904ee118c1
