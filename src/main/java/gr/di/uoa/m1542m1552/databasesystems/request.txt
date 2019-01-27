@@ -39,31 +39,60 @@
 	"userId": "5c447c14da424854d031a34b"
 }
 
+
+*** Indexes ***
+
+1. db.requests.createIndex( { "creationDate": 1, "typeOfServiceRequest": 1 } )
+2. db.requests.createIndex( { "typeOfServiceRequest": 1, "creationDate": 1 } )
+3. db.requests.createIndex( { "creationDate": 1, "zipCode": 1 } )
+4. ->2
+5. ->1
+6. db.requests.createIndex( { "geoLocation": 1 } )
+7. db.requests.createIndex( { "creationDate": 1, "upvotesCount": 1 } )
+8. db.users.createIndex( { "upvotesCount": 1 } )
+
+
 *** Queries ***
 
 1. 
-http://localhost:8090/query/1/startDate=2010-08-05&endDate=2011-11-05
-2. 
-localhost:8090/query/2/typeOfServiceRequest=Tree Trim&creationDate=2018-10-01&sompletionDate=2018-11-15
+http://localhost:8090/query/1/startDate=2011-01-01&endDate=2011-05-01
+db.requests.aggregate([ { "$match" : { "creationDate" : { "$gte" : ISODate("2011-01-01"), "$lte" : ISODate("2011-05-01")}}} , { "$group" : { "_id" : "$typeOfServiceRequest" , "total" : { "$sum" : 1}}} , { "$project" : { "typeOfServiceRequest" : "$_id" , "total" : 1}} , { "$sort" : { "total" : -1}}]);
+
+2.
+localhost:8090/query/2/typeOfServiceRequest=TREE_TRIMS&creationDate=2018-10-01&sompletionDate=2018-11-15
+
+3.
+http://localhost:8090/query/3/date=2011-05-01
+db.requests.aggregate([{$match: {'creationDate': ISODate('2011-05-01')}}, {$group: {'_id': { 'zipCode': '$zipCode', 'typeOfServiceRequest': '$typeOfServiceRequest'}, 'total': {$sum: 1}}}, {$group: {'_id': '$_id.zipCode', 'requestTypes': {$push: {'type': '$_id.typeOfServiceRequest', 'total': '$total'}}}}, {$unwind: '$requestTypes'}, { $sort : { '_id' : -1, 'requestTypes.total': -1 }}, {$group: {'_id': '$_id', 'requestTypes': {$push: '$requestTypes'}}}, {$project:{'requestTypes':{$slice:["$requestTypes", 3]}}}]);
+
 4.
-localhost:8090/query/4/typeOfServiceRequest=Tree Trim
+localhost:8090/query/4/typeOfServiceRequest=TREE_TRIMS
+
+5.
+http://localhost:8090/query/5/startDate=2011-01-01&endDate=2011-05-01
+db.requests.aggregate([{$match: {'creationDate': {$gte: ISODate('2011-01-01T00:00:00Z'), $lte: ISODate('2011-05-01T00:00:00Z')}}}, {$project: {'_id': 1, 'typeOfServiceRequest': 1, 'completionTime': {$subtract: ['$completionDate', '$creationDate']}}}, {$group: {'_id': '$typeOfServiceRequest', 'avgCompletionTime': {$avg: '$completionTime'}}}, {$project: {'typeOfServiceRequest': '$_id', "avgCompletionTime" : 1}}]);
+
 6.
 localhost:8090/query/6/date=2018-10-01&long1=-113&lat1=31&long2=-77&lat2=48
 localhost:8090/query/6/date=2018-10-02&long1=-134&lat1=23&long2=-48&lat2=48
+
+7.
+http://localhost:8090/query/7/date=2011-05-01
+db.requests.aggregate([{$match: {'creationDate': {$gte: ISODate('2011-05-01T00:00:00Z'), $lte: ISODate('2011-05-01T23:59:59Z')}}}, {$sort: {'upvotesCount': -1}}, {$limit: 50}]);
+
 8.
 localhost:8090/query/8/
-10.
 
-
-3.
-1. http://localhost:8090/query/1/startDate=2010-08-05&endDate=2011-11-05
-2.
-3. http://localhost:8090/query/3/date=2011-01-06
-4.
-5.
-6.
-7.
-8.
 9.
+http://localhost:8090/query/9/
+db.users.aggregate([{$unwind: "$upvotes"}, {$group: {'_id': "$_id", 'wards': { $addToSet: "$upvotes.ward" }}}, {$unwind: "$wards"}, {$group: {'_id': '$_id', 'total': { $sum: 1 }}}, {$project: {'userId': '$_id', 'total': 1}}, {$sort: {'total': -1}}, {$limit: 50}]);
+
 10.
+localhost:8090/query/10/
+
 11.
+http://localhost:8090/query/11/fullName=Jeffrey Blackwell
+db.requests.aggregate([{$match: {'fullName': 'Jeffrey Blackwell'}}, {$unwind: '$upvotes'}, {$group: {'_id': '$_id', 'wards': {$addToSet: '$upvotes.ward'}}}, {$unwind: '$wards'}]);
+
+
+

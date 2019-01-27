@@ -1,11 +1,8 @@
 package gr.di.uoa.m1542m1552.databasesystems.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 
 import gr.di.uoa.m1542m1552.databasesystems.domain.Request;
-
-import java.util.List;
 
 public interface RequestRepository extends MongoRepository<Request, String> {
 

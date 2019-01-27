@@ -8,6 +8,8 @@
 
 - What about user id? - We used object id for space saving
 
+- Pair Programming Google
+
 
 How TODO?
 - Array size for upvotes

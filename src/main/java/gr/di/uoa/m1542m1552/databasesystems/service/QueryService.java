@@ -52,16 +52,32 @@ public class QueryService {
 
     public List<QueryResult> query2(String typeOfServiceRequest, Date creationDate, Date completionDate) {
         MatchOperation filter = match(Criteria.where("creationDate").gte(creationDate).lte(completionDate)
-                                              .and("typeOfServiceRequest").is(typeOfServiceRequest));
+                                      .and("typeOfServiceRequest").is(typeOfServiceRequest));
 
-        ProjectionOperation p = Aggregation.project().andExpression("creationDate").dateAsFormattedString("%Y-%m-%d").as("formatedDate");
-
-        Aggregation aggregation = newAggregation(filter, p); // , groupByServiceRequest); //, sortByPopDesc);
+        ProjectionOperation projectStage = Aggregation.project().andExpression("creationDate").dateAsFormattedString("%Y-%m-%d").as("formattedDate");
+        GroupOperation groupByDate = group("formattedDate").count().as("total");
+        ProjectionOperation projectStage2 = Aggregation.project().andExpression("_id").as("date").andInclude("total");
+        SortOperation sortByDate = sort(new Sort(Sort.Direction.DESC, "date"));
+        
+        Aggregation aggregation = newAggregation(filter, projectStage, groupByDate, projectStage2, sortByDate);
 
         List<QueryResult> result = mongoTemplate.aggregate(aggregation, "requests", QueryResult.class).getMappedResults();
 
-        return result;
+		return result;
     }
+
+    // public List<QueryResult> query2(String typeOfServiceRequest, Date creationDate, Date completionDate) {
+    //     MatchOperation filter = match(Criteria.where("creationDate").gte(creationDate).lte(completionDate)
+    //                                           .and("typeOfServiceRequest").is(typeOfServiceRequest));
+
+    //     ProjectionOperation p = Aggregation.project().andExpression("creationDate").dateAsFormattedString("%Y-%m-%d").as("formatedDate");
+
+    //     Aggregation aggregation = newAggregation(filter, p); // , groupByServiceRequest); //, sortByPopDesc);
+
+    //     List<QueryResult> result = mongoTemplate.aggregate(aggregation, "requests", QueryResult.class).getMappedResults();
+
+    //     return result;
+    // }
 
     public List<QueryResult> query3(String date) {
         ProjectionOperation projectDateStage = Aggregation.project("_id", "zipCode", "typeOfServiceRequest")

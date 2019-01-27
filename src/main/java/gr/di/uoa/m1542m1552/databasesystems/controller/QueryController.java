@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gr.di.uoa.m1542m1552.databasesystems.domain.QueryResult;
 import gr.di.uoa.m1542m1552.databasesystems.domain.Request;
+import gr.di.uoa.m1542m1552.databasesystems.enumerations.TypeOfServiceRequest;
 import gr.di.uoa.m1542m1552.databasesystems.service.QueryService;
 
 @RestController
@@ -28,7 +29,7 @@ public class QueryController {
     }
 
     @GetMapping("/2/typeOfServiceRequest={typeOfServiceRequestStr}&creationDate={creationDateStr}&sompletionDate={completionDateStr}")
-    public List<QueryResult> query2(@PathVariable String typeOfServiceRequestStr, @PathVariable String creationDateStr,
+    public List<QueryResult> query2(@PathVariable TypeOfServiceRequest typeOfServiceRequestStr, @PathVariable String creationDateStr,
             @PathVariable String completionDateStr) {
         Date creationDate, completionDate;
 
@@ -43,7 +44,7 @@ public class QueryController {
             return null;
         }
 
-        return queryService.query2(typeOfServiceRequestStr, creationDate, completionDate);
+        return queryService.query2(typeOfServiceRequestStr.getText(), creationDate, completionDate);
     }
 
 	@GetMapping("/3/date={dateStr}")
@@ -53,9 +54,9 @@ public class QueryController {
     }
 
     @GetMapping("/4/typeOfServiceRequest={typeOfServiceRequestStr}")
-    public List<QueryResult> query4(@PathVariable String typeOfServiceRequestStr) {
+    public List<QueryResult> query4(@PathVariable TypeOfServiceRequest typeOfServiceRequestStr) {
 
-        return queryService.query4(typeOfServiceRequestStr);
+        return queryService.query4(typeOfServiceRequestStr.getText());
     }
 
 	@GetMapping("/5/startDate={startDateStr}&endDate={endDateStr}")
