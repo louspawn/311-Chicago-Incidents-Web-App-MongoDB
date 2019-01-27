@@ -36,19 +36,16 @@ public class QueryService {
     MongoTemplate mongoTemplate;
 
     public List<QueryResult> query1(String startDate, String endDate) {
-        ProjectionOperation projectDateStage = Aggregation.project("_id", "typeOfServiceRequest")
-                .andExpression("creationDate").dateAsFormattedString("%Y-%m-%d").as("formatedDate");
+        ProjectionOperation projectDateStage = Aggregation.project("_id", "typeOfServiceRequest").andExpression("creationDate")
+                                                          .dateAsFormattedString("%Y-%m-%d").as("formatedDate");
         MatchOperation matchStage = Aggregation.match(new Criteria("formatedDate").gte(startDate).lte(endDate));
         GroupOperation groupByStageAndCount = group("typeOfServiceRequest").count().as("total");
-        ProjectionOperation projectStage = Aggregation.project().andExpression("_id").as("typeOfServiceRequest")
-                .andInclude("total");
+        ProjectionOperation projectStage = Aggregation.project().andExpression("_id").as("typeOfServiceRequest") .andInclude("total");
         SortOperation sortByStage = sort(new Sort(Sort.Direction.DESC, "total"));
 
-        Aggregation aggregation = newAggregation(projectDateStage, matchStage, groupByStageAndCount, projectStage,
-                sortByStage);
+        Aggregation aggregation = newAggregation(projectDateStage, matchStage, groupByStageAndCount, projectStage, sortByStage);
 
-        List<QueryResult> result = mongoTemplate.aggregate(aggregation, "requests", QueryResult.class)
-                .getMappedResults();
+        List<QueryResult> result = mongoTemplate.aggregate(aggregation, "requests", QueryResult.class) .getMappedResults();
 
         return result;
     }

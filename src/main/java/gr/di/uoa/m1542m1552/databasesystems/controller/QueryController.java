@@ -53,44 +53,24 @@ public class QueryController {
         return queryService.query3(dateStr);
     }
 
-	@GetMapping("/5/startDate={startDateStr}&endDate={endDateStr}")
-	public List<QueryResult> query5(@PathVariable String startDateStr, @PathVariable String endDateStr) {
-
-        return queryService.query5(startDateStr, endDateStr);
-    }
-
-	@GetMapping("/7/date={dateStr}")
-	public List<Request> query7(@PathVariable String dateStr) {
-
-        return queryService.query7(dateStr);
-    }
-
-	@GetMapping("/9/")
-	public List<QueryResult> query9() {
-
-        return queryService.query9();
-    }
-
-	@GetMapping("/11/fullName={fullName}")
-	public QueryResult query11(@PathVariable String fullName) {
-
-        return queryService.query11(fullName);
-    }
-
     @GetMapping("/4/typeOfServiceRequest={typeOfServiceRequestStr}")
     public List<QueryResult> query4(@PathVariable String typeOfServiceRequestStr) {
 
         return queryService.query4(typeOfServiceRequestStr);
     }
 
+	@GetMapping("/5/startDate={startDateStr}&endDate={endDateStr}")
+	public List<QueryResult> query5(@PathVariable String startDateStr, @PathVariable String endDateStr) {
+
+        return queryService.query5(startDateStr, endDateStr);
+    }
+    
     @GetMapping("/6/date={dateStr}&long1={long1Str}&lat1={lat1Str}&long2={long2Str}&lat2={lat2Str}")
     public List<QueryResult> query6(@PathVariable String long1Str, @PathVariable String lat1Str, 
                                     @PathVariable String long2Str, @PathVariable String lat2Str,
                                     @PathVariable String dateStr) {
-        // Date date;
         Double lat1, long1, lat2, long2;
 
-        // date = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
         lat1 = Double.valueOf(lat1Str);
         long1 = Double.valueOf(long1Str);
         lat2 = Double.valueOf(lat2Str);
@@ -99,9 +79,21 @@ public class QueryController {
         return queryService.query6(dateStr, long1, lat1, long2, lat2);
     }
 
+	@GetMapping("/7/date={dateStr}")
+	public List<Request> query7(@PathVariable String dateStr) {
+
+        return queryService.query7(dateStr);
+    }
+
     @GetMapping("/8/")
     public List<QueryResult> query8() {
         return queryService.query8();
+    }
+
+	@GetMapping("/9/")
+	public List<QueryResult> query9() {
+
+        return queryService.query9();
     }
 
     @GetMapping("/10/")
@@ -109,5 +101,9 @@ public class QueryController {
         return queryService.query10();
     }
 
+	@GetMapping("/11/fullName={fullName}")
+	public QueryResult query11(@PathVariable String fullName) {
 
+        return queryService.query11(fullName);
+    }
 }
