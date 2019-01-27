@@ -7,7 +7,7 @@ def fake_telephone_number():
     return telephone_number + str(np.random.randint(10, 99)) + '-' + str(np.random.randint(1000, 9999))
 
 def incr(loop_idx):
-    return 0 if loop_idx >= 69999 else loop_idx + 1
+    return 0 if loop_idx >= 54999 else loop_idx + 1
 
 def add_upvote(usr_id, req_id, telephone_number, ward):
     usr_query = {"_id": usr_id}
@@ -46,15 +46,17 @@ if create_users:
 
 if create_requests:
     loop_idx = 0
-    s = np.random.normal(0, 40, 70000) 
+    s = np.random.normal(0, 40, 55000) 
     user_available_votes = np.abs(s.round().astype(int)) 
     user_data_cur = col_usr.find({})
+
+    # TODO: permutation
 
     user_data = []
     for user in user_data_cur:
         user_data.append({"_id": user["_id"], "telephoneNumber": user['telephoneNumber']})
 
-    agg_pipeline = [{"$sample": {"size": 1000000}}, 
+    agg_pipeline = [{"$sample": {"size": 1100000}}, 
                     {"$project": {"_id": 1, "typeOfServiceRequest": 1, "ward": 1}}]
     random_requests = col_req.aggregate(agg_pipeline, allowDiskUse=True)
 

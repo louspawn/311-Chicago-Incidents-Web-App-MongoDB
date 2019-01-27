@@ -45,6 +45,15 @@
 http://localhost:8090/query/1/startDate=2010-08-05&endDate=2011-11-05
 2. 
 localhost:8090/query/2/typeOfServiceRequest=TREE_TRIMS&creationDate=2018-10-01&sompletionDate=2018-11-15
+4.
+localhost:8090/query/4/typeOfServiceRequest=Tree Trim
+6.
+localhost:8090/query/6/date=2018-10-01&long1=-113&lat1=31&long2=-77&lat2=48
+localhost:8090/query/6/date=2018-10-02&long1=-134&lat1=23&long2=-48&lat2=48
+8.
+localhost:8090/query/8/
+10.
+
 
 3.
 1. http://localhost:8090/query/1/startDate=2010-08-05&endDate=2011-11-05

@@ -6,6 +6,8 @@
 
 - Pagination
 
+- What about user id? - We used object id for space saving
+
 
 How TODO?
 - Array size for upvotes

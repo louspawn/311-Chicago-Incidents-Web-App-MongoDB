@@ -68,4 +68,38 @@ public class QueryController {
 
         return queryService.query3(date);
     }
+
+    @GetMapping("/4/typeOfServiceRequest={typeOfServiceRequestStr}")
+    public List<QueryResult> query4(@PathVariable String typeOfServiceRequestStr) {
+
+        return queryService.query4(typeOfServiceRequestStr);
+    }
+
+    @GetMapping("/6/date={dateStr}&long1={long1Str}&lat1={lat1Str}&long2={long2Str}&lat2={lat2Str}")
+    public List<QueryResult> query6(@PathVariable String long1Str, @PathVariable String lat1Str, 
+                                    @PathVariable String long2Str, @PathVariable String lat2Str,
+                                    @PathVariable String dateStr) {
+        // Date date;
+        Double lat1, long1, lat2, long2;
+
+        // date = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
+        lat1 = Double.valueOf(lat1Str);
+        long1 = Double.valueOf(long1Str);
+        lat2 = Double.valueOf(lat2Str);
+        long2 = Double.valueOf(long2Str);
+
+        return queryService.query6(dateStr, long1, lat1, long2, lat2);
+    }
+
+    @GetMapping("/8/")
+    public List<QueryResult> query8() {
+        return queryService.query8();
+    }
+
+    @GetMapping("/10/")
+    public List<QueryResult> query10() {
+        return queryService.query10();
+    }
+
+
 }
