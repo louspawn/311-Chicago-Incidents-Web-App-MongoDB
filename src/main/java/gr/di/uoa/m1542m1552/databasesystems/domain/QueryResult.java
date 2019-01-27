@@ -7,13 +7,26 @@ import gr.di.uoa.m1542m1552.databasesystems.enumerations.TypeOfServiceRequest;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class QueryResult {
 
+    private String userId;
     private String typeOfServiceRequest;
     private Integer total;
     private String date;
-
     private Integer zipCode;
-
     private Long avgCompletionTime;
+
+    /**
+     * @return the userId
+     */
+    public String getUserId() {
+        return userId;
+    }
+
+    /**
+     * @param userId the userId to set
+     */
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     /**
      * @return the typeOfServiceRequest

@@ -158,7 +158,7 @@ public class QueryService {
 		return result;
     }
 
-    public List<User> query9() {
+    public List<QueryResult> query9() {
 
         UnwindOperation upvotesUnwindOperation = Aggregation.unwind("upvotes");
 
@@ -167,14 +167,16 @@ public class QueryService {
         UnwindOperation wardsUnwindOperation = Aggregation.unwind("wards");
 
         GroupOperation groupByStageAndCount = group("_id").count().as("total");
+
+        ProjectionOperation projectStage = Aggregation.project().andExpression("_id").as("userId").andInclude("total");
     
         SortOperation sortByStage = sort(new Sort(Sort.Direction.DESC, "total"));
 
         LimitOperation limitToFirstFifty = limit(50);
 
-        Aggregation aggregation = newAggregation(upvotesUnwindOperation, groupByStage, wardsUnwindOperation, groupByStageAndCount, sortByStage, limitToFirstFifty);
+        Aggregation aggregation = newAggregation(upvotesUnwindOperation, groupByStage, wardsUnwindOperation, groupByStageAndCount, projectStage, sortByStage, limitToFirstFifty);
 
-        List<User> result = mongoTemplate.aggregate(aggregation, "users", User.class).getMappedResults();
+        List<QueryResult> result = mongoTemplate.aggregate(aggregation, "users", QueryResult.class).getMappedResults();
 		
 		return result;
     }

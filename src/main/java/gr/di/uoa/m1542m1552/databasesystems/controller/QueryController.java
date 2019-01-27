@@ -100,7 +100,7 @@ public class QueryController {
     }
 
 	@GetMapping("/9/")
-	public List<User> query9() {
+	public List<QueryResult> query9() {
         return queryService.query9();
     }
 }
